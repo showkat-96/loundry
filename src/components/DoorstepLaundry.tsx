@@ -1,4 +1,4 @@
-import { Badge, MessageCircle, Shield, Star, Timer, Truck } from "lucide-react";
+import { MessageCircle, Shield, Star, Timer, Truck } from "lucide-react";
 
 function DoorstepLaundry() {
   return (
