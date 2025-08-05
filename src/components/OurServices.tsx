@@ -40,7 +40,7 @@ const ServiceCard = ({
 
 const ServicesSection: FC = () => {
   return (
-    <section className="py-16 bg-gray-50">
+    <section id="services" className="py-16 bg-gray-50">
       <div className="max-w-6xl mx-auto px-4">
         <h2 className="text-3xl font-bold text-center text-blue-900 mb-3">
           Our Services
