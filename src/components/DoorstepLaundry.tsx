@@ -26,13 +26,12 @@ function DoorstepLaundry() {
           {/* Buttons */}
           <div className="flex flex-col sm:flex-row gap-4 justify-center mb-14">
             <button
-              className="inline-flex items-center justify-center gap-2 text-lg px-8 py-4 rounded-full bg-blue-600 hover:bg-blue-700 text-white transition"
-              aria-label="Book a Pickup"
+              className="inline-flex items-center justify-center gap-2 text-lg px-8 py-4 rounded-full border border-blue-600 text-blue-600 hover:bg-blue-100 transition"
+              aria-label="Book Now"
             >
               <Truck className="h-5 w-5" />
               <span>Book Now</span>
             </button>
-
             <button
               className="inline-flex items-center justify-center gap-2 text-lg px-8 py-4 rounded-full border border-blue-600 text-blue-600 hover:bg-blue-100 transition"
               aria-label="Get a Quote"

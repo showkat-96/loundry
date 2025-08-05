@@ -54,7 +54,7 @@ function GetInTouch() {
               </div>
               <h3 className="text-xl font-semibold mb-1">WhatsApp</h3>
               <p className="text-blue-100 mb-2">Instant booking & support</p>
-              <button className="mt-2 inline-flex items-center justify-center px-5 py-2 bg-green-600 hover:bg-green-700 rounded-full text-white transition">
+              <button className="inline-flex items-center justify-center gap-2 px-8 py-4 text-lg font-medium bg-white text-blue-900 rounded-full hover:bg-gray-100 transition">
                 <MessageCircle className="h-5 w-5 mr-2" />
                 Book via WhatsApp
               </button>
@@ -74,7 +74,7 @@ function GetInTouch() {
                 <Truck className="h-5 w-5" />
                 Schedule Pickup
               </button>
-              <button className="inline-flex items-center justify-center gap-2 px-8 py-4 text-lg font-medium border border-white text-white rounded-full hover:bg-white hover:text-blue-900 transition">
+              <button className="inline-flex items-center justify-center gap-2 px-8 py-4 text-lg font-medium bg-white text-blue-900 rounded-full hover:bg-gray-100 transition">
                 <MessageCircle className="h-5 w-5" />
                 WhatsApp Us
               </button>
