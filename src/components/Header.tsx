@@ -1,9 +1,17 @@
 import { Clock, Phone, Sparkles, Truck } from "lucide-react";
 
+import { useState } from "react";
+import BookingForm from "./BookingForm";
+
 function Header() {
+  const [isBookingOpen, setIsBookingOpen] = useState(false);
+
   return (
     <header className="bg-white shadow-sm border-b">
-      {/* Top info bar */}
+      <BookingForm
+        isOpen={isBookingOpen}
+        onClose={() => setIsBookingOpen(false)}
+      />
       <div className="bg-blue-900 text-white text-sm py-2">
         <div className="container mx-auto px-4 flex flex-col sm:flex-row justify-between items-center gap-2">
           <div className="flex flex-wrap items-center justify-center gap-4">
@@ -22,7 +30,6 @@ function Header() {
           </div>
         </div>
       </div>
-
       {/* Main nav */}
       <nav className="container mx-auto px-4 py-5">
         <div className="flex justify-between items-center">
@@ -59,7 +66,10 @@ function Header() {
             <button className="px-4 py-2 border border-blue-600 text-blue-600 rounded-md hover:bg-blue-50 transition text-sm font-medium">
               Get Quote
             </button>
-            <button className="px-4 py-2 border border-blue-600 text-blue-600 rounded-md hover:bg-blue-50 transition text-sm font-medium">
+            <button
+              onClick={() => setIsBookingOpen(true)}
+              className="px-4 py-2 border border-blue-600 text-blue-600 rounded-md hover:bg-blue-50 transition text-sm font-medium"
+            >
               Book Now
             </button>
           </div>

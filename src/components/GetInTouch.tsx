@@ -1,8 +1,23 @@
 import { Mail, MessageCircle, Phone, Truck } from "lucide-react";
+import { useState } from "react";
+import SchedulePickupForm from "./SchedulePickupForm";
 
 function GetInTouch() {
+  const [isPickupOpen, setIsPickupOpen] = useState(false);
+  const [channel, setChannel] = useState<"email" | "whatsapp">("email");
+
+  const handleClick = (type: "email" | "whatsapp") => {
+    setChannel(type);
+    setIsPickupOpen(true);
+  };
   return (
     <section id="contact" className="py-20 bg-blue-900 text-white">
+      <SchedulePickupForm
+        isOpen={isPickupOpen}
+        onClose={() => setIsPickupOpen(false)}
+        channel={channel}
+      />
+
       <div className="container mx-auto px-6">
         <div className="max-w-5xl mx-auto">
           {/* Heading */}
@@ -70,11 +85,17 @@ function GetInTouch() {
               Experience the convenience of doorstep laundry service
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <button className="inline-flex items-center justify-center gap-2 px-8 py-4 text-lg font-medium bg-white text-blue-900 rounded-full hover:bg-gray-100 transition">
+              <button
+                onClick={() => handleClick("email")}
+                className="inline-flex items-center justify-center gap-2 px-8 py-4 text-lg font-medium bg-white text-blue-900 rounded-full hover:bg-gray-100 transition"
+              >
                 <Truck className="h-5 w-5" />
                 Schedule Pickup
               </button>
-              <button className="inline-flex items-center justify-center gap-2 px-8 py-4 text-lg font-medium bg-white text-blue-900 rounded-full hover:bg-gray-100 transition">
+              <button
+                onClick={() => handleClick("whatsapp")}
+                className="inline-flex items-center justify-center gap-2 px-8 py-4 text-lg font-medium bg-white text-blue-900 rounded-full hover:bg-gray-100 transition"
+              >
                 <MessageCircle className="h-5 w-5" />
                 WhatsApp Us
               </button>

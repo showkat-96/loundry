@@ -1,11 +1,20 @@
 import { MessageCircle, Shield, Star, Timer, Truck } from "lucide-react";
+import BookingForm from "./BookingForm";
+import { useState } from "react";
 
 function DoorstepLaundry() {
+  const [isBookingOpen, setIsBookingOpen] = useState(false);
+
   return (
     <section
       id="home"
       className="bg-gradient-to-br from-blue-50 to-sky-100 py-24"
     >
+      <BookingForm
+        isOpen={isBookingOpen}
+        onClose={() => setIsBookingOpen(false)}
+      />
+
       <div className="container mx-auto px-6">
         <div className="max-w-4xl mx-auto text-center">
           <div className="inline-flex items-center px-4 py-1 mb-6 rounded-full bg-sky-100 text-sky-800 text-sm font-medium hover:bg-sky-200 transition">
@@ -26,6 +35,7 @@ function DoorstepLaundry() {
           {/* Buttons */}
           <div className="flex flex-col sm:flex-row gap-4 justify-center mb-14">
             <button
+              onClick={() => setIsBookingOpen(true)}
               className="inline-flex items-center justify-center gap-2 text-lg px-8 py-4 rounded-full border border-blue-600 text-blue-600 hover:bg-blue-100 transition"
               aria-label="Book Now"
             >
