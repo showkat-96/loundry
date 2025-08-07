@@ -1,4 +1,4 @@
-import { MessageCircle, Shield, Star, Timer, Truck } from "lucide-react";
+import { Shield, Star, Timer, Truck } from "lucide-react";
 import BookingForm from "./BookingForm";
 import { useState } from "react";
 

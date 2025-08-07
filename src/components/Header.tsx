@@ -1,4 +1,4 @@
-import { Clock, Phone, Sparkles, Truck, Menu } from "lucide-react";
+import { Clock, Phone, Truck, Menu } from "lucide-react";
 import { useState } from "react";
 import BookingForm from "./BookingForm";
 
