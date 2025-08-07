@@ -6,12 +6,12 @@ function WhyChooseUs() {
       <div className="max-w-6xl mx-auto px-4 sm:px-6">
         {/* Heading */}
         <div className="text-center mb-12 sm:mb-16">
-          <div className="text-3xl sm:text-4xl font-bold text-blue-900 mb-3 sm:mb-4">
+          <h2 className="text-3xl sm:text-4xl font-extrabold text-blue-900 mb-4">
             Why Choose Us?
-          </div>
+          </h2>
           <p className="text-sm sm:text-base text-gray-600 max-w-2xl mx-auto">
-            We're committed to providing high-quality laundry and dry cleaning
-            services with unmatched convenience and care.
+            We’re committed to delivering premium quality laundry and dry cleaning
+            services — backed by care, speed, and convenience.
           </p>
         </div>
 
@@ -21,7 +21,7 @@ function WhyChooseUs() {
             ({ title, description, icon: Icon, bgColor, iconColor }) => (
               <div
                 key={title}
-                className="text-center px-4 py-6 rounded-2xl shadow-sm hover:shadow-md transition"
+                className="text-center px-4 py-6 rounded-2xl shadow hover:shadow-md transition duration-300 bg-white"
               >
                 <div
                   className={`rounded-full p-5 w-20 h-20 mx-auto mb-4 flex items-center justify-center ${bgColor}`}
@@ -31,7 +31,7 @@ function WhyChooseUs() {
                 <h3 className="text-lg sm:text-xl font-semibold text-blue-900 mb-2">
                   {title}
                 </h3>
-                <p className="text-gray-600 text-sm sm:text-base">
+                <p className="text-gray-600 text-sm sm:text-base leading-relaxed">
                   {description}
                 </p>
               </div>
@@ -53,7 +53,7 @@ const features = [
   },
   {
     title: "Quick Service",
-    description: "Same-day and express services available.",
+    description: "Same-day and express service available.",
     icon: Timer,
     bgColor: "bg-sky-100",
     iconColor: "text-sky-600",
@@ -67,7 +67,7 @@ const features = [
   },
   {
     title: "Customer Care",
-    description: "24/7 support for all your needs.",
+    description: "24/7 support to ensure your satisfaction.",
     icon: Heart,
     bgColor: "bg-yellow-100",
     iconColor: "text-red-500",

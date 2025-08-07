@@ -20,21 +20,21 @@ const ServiceCard = ({
   color: string;
   services: string[];
 }) => (
-  <div className="bg-white rounded-lg shadow-md overflow-hidden">
+  <div className="bg-white rounded-xl shadow-lg overflow-hidden">
     <div
-      className={`flex items-center gap-2 px-4 py-3 ${color} text-white font-semibold text-base sm:text-lg`}
+      className={`flex items-center gap-2 px-5 py-4 ${color} text-white font-semibold text-lg sm:text-xl`}
     >
       {icon}
       <span>{title}</span>
     </div>
-    <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 p-4">
+    <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 px-5 py-4">
       {services.map((service, idx) => (
         <div key={idx} className="flex items-start gap-2">
           <CheckCircle
             className="text-green-500 w-5 h-5 mt-0.5"
             aria-hidden="true"
           />
-          <span className="text-gray-700 text-sm sm:text-base">{service}</span>
+          <span className="text-gray-800 text-sm sm:text-base">{service}</span>
         </div>
       ))}
     </div>
@@ -43,17 +43,20 @@ const ServiceCard = ({
 
 const ServicesSection: FC = () => {
   return (
-    <section id="services" className="py-16 sm:py-20 bg-gray-50 scroll-mt-24">
+    <section
+      id="services"
+      className="py-16 sm:py-20 bg-gradient-to-b from-sky-50 to-white scroll-mt-24"
+    >
       <div className="max-w-6xl mx-auto px-4 sm:px-6">
-        <div className="text-2xl sm:text-3xl font-bold text-center text-blue-900 mb-3">
+        <h2 className="text-3xl sm:text-4xl font-bold text-center text-blue-900 mb-3">
           Our Services
-        </div>
-        <p className="text-center text-sm sm:text-base text-gray-600 mb-10">
-          Comprehensive laundry and dry cleaning solutions for all your needs
+        </h2>
+        <p className="text-center text-base text-gray-600 mb-12">
+          Comprehensive laundry and dry cleaning solutions tailored to your lifestyle.
         </p>
 
         {/* Service Cards */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-10">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-14">
           <ServiceCard
             icon={<Shirt className="w-5 h-5" aria-hidden="true" />}
             title="Clothing Services"
@@ -114,12 +117,12 @@ const ServicesSection: FC = () => {
 
         {/* Other Services */}
         <div className="max-w-3xl mx-auto">
-          <div className="bg-white rounded-lg shadow-md overflow-hidden">
-            <div className="flex items-center gap-2 px-4 py-3 bg-green-500 text-white font-semibold text-base sm:text-lg">
+          <div className="bg-white rounded-xl shadow-lg overflow-hidden">
+            <div className="flex items-center gap-2 px-5 py-4 bg-green-500 text-white font-semibold text-lg sm:text-xl">
               <Package className="w-5 h-5" aria-hidden="true" />
               <span>Other Services</span>
             </div>
-            <div className="flex flex-wrap gap-3 p-4">
+            <div className="flex flex-wrap gap-3 p-5">
               {[
                 {
                   label: "Pickup & Delivery",
@@ -136,7 +139,7 @@ const ServicesSection: FC = () => {
               ].map((item, idx) => (
                 <div
                   key={idx}
-                  className="flex items-center gap-2 bg-green-100 text-green-800 px-3 py-1.5 rounded-full text-xs sm:text-sm"
+                  className="flex items-center gap-2 bg-green-100 text-green-800 px-4 py-2 rounded-full text-sm font-medium shadow-sm"
                 >
                   {item.icon}
                   <span>{item.label}</span>
