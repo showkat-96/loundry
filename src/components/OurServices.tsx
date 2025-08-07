@@ -45,9 +45,9 @@ const ServicesSection: FC = () => {
   return (
     <section id="services" className="py-16 sm:py-20 bg-gray-50 scroll-mt-24">
       <div className="max-w-6xl mx-auto px-4 sm:px-6">
-        <h2 className="text-2xl sm:text-3xl font-bold text-center text-blue-900 mb-3">
+        <div className="text-2xl sm:text-3xl font-bold text-center text-blue-900 mb-3">
           Our Services
-        </h2>
+        </div>
         <p className="text-center text-sm sm:text-base text-gray-600 mb-10">
           Comprehensive laundry and dry cleaning solutions for all your needs
         </p>

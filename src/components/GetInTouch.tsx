@@ -23,9 +23,9 @@ function GetInTouch() {
           <div className="max-w-5xl mx-auto">
             {/* Heading */}
             <div className="text-center mb-14">
-              <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold mb-4">
+              <div className="text-3xl sm:text-4xl md:text-5xl font-bold mb-4">
                 Get In Touch
-              </h2>
+              </div>
               <p className="text-base sm:text-lg text-blue-100 max-w-2xl mx-auto">
                 Ready to experience hassle-free laundry service? Contact us
                 today!

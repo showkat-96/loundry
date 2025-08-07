@@ -45,9 +45,9 @@ function Header() {
               <Sparkles className="h-5 w-5" />
             </div> */}
             <div>
-              <h1 className="text-lg sm:text-2xl font-bold text-blue-900 leading-tight">
+              <div className="text-lg sm:text-2xl font-bold text-blue-900 leading-tight">
                 Professional Service
-              </h1>
+              </div>
               <p className="text-xs sm:text-sm text-sky-600">
                 Doorstep Laundry & Dry Cleaning
               </p>
@@ -90,23 +90,25 @@ function Header() {
 
         {/* Mobile Nav Links */}
         {isMenuOpen && (
-          <div className="mt-4 flex flex-col space-y-2 md:hidden">
-            {["home", "about", "services", "contact"].map((section) => (
-              <a
-                key={section}
-                href={`#${section}`}
-                className="text-gray-700 hover:text-blue-600 font-medium transition text-sm"
-              >
-                {section.charAt(0).toUpperCase() + section.slice(1)}
-              </a>
-            ))}
-            <div className="flex gap-2 mt-2">
-              <button className="flex-1 px-3 py-1.5 border border-blue-600 text-blue-600 rounded-md hover:bg-blue-50 transition text-sm">
+          <div className="mt-4 flex flex-col gap-3 md:hidden">
+            <div className="flex flex-wrap justify-center gap-4">
+              {["home", "about", "services", "contact"].map((section) => (
+                <a
+                  key={section}
+                  href={`#${section}`}
+                  className="text-gray-700 hover:text-blue-600 font-medium transition text-sm capitalize"
+                >
+                  {section}
+                </a>
+              ))}
+            </div>
+            <div className="flex justify-center gap-2 mt-2">
+              <button className="px-4 py-2 border border-blue-600 text-blue-600 rounded-md hover:bg-blue-50 transition text-sm">
                 Get Quote
               </button>
               <button
                 onClick={() => setIsBookingOpen(true)}
-                className="flex-1 px-3 py-1.5 border border-blue-600 text-blue-600 rounded-md hover:bg-blue-50 transition text-sm"
+                className="px-4 py-2 border border-blue-600 text-blue-600 rounded-md hover:bg-blue-50 transition text-sm"
               >
                 Book Now
               </button>

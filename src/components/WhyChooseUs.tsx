@@ -6,9 +6,9 @@ function WhyChooseUs() {
       <div className="max-w-6xl mx-auto px-4 sm:px-6">
         {/* Heading */}
         <div className="text-center mb-12 sm:mb-16">
-          <h2 className="text-3xl sm:text-4xl font-bold text-blue-900 mb-3 sm:mb-4">
+          <div className="text-3xl sm:text-4xl font-bold text-blue-900 mb-3 sm:mb-4">
             Why Choose Us?
-          </h2>
+          </div>
           <p className="text-sm sm:text-base text-gray-600 max-w-2xl mx-auto">
             We're committed to providing high-quality laundry and dry cleaning
             services with unmatched convenience and care.
