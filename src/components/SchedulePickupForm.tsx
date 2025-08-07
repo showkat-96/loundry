@@ -1,14 +1,13 @@
 import { useState } from "react";
-import { Truck } from "lucide-react";
+import { Truck, X } from "lucide-react";
+import sendToWhatsapp from "../utils/whatsapp";
 
 export default function SchedulePickupForm({
   isOpen,
   onClose,
-  channel = "email",
 }: {
   isOpen: boolean;
   onClose: () => void;
-  channel: "email" | "whatsapp";
 }) {
   const today = new Date().toISOString().split("T")[0];
 
@@ -20,42 +19,21 @@ export default function SchedulePickupForm({
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
 
-    const pickupData = {
-      pickupDate,
-      pickupTime,
-      specialInstructions,
-    };
+    const formattedTime =
+      {
+        morning: "🌅 Morning (7–11 AM)",
+        afternoon: "☀️ Afternoon (11–3 PM)",
+        evening: "🌆 Evening (3–7 PM)",
+        night: "🌙 Night (7–10 PM)",
+      }[pickupTime] || pickupTime;
 
-    console.log("🚚 Pickup Scheduled:", pickupData);
-    if (channel === "whatsapp") {
-      const formattedTime =
-        {
-          morning: "🌅 Morning (7–11 AM)",
-          afternoon: "☀️ Afternoon (11–3 PM)",
-          evening: "🌆 Evening (3–7 PM)",
-          night: "🌙 Night (7–10 PM)",
-        }[pickupTime] || pickupTime;
+    const message = `Hi, I’d like to schedule a pickup on ${pickupDate} at ${formattedTime}. ${
+      specialInstructions ? "Notes: " + specialInstructions : ""
+    }`;
 
-      const message = `Hi, I’d like to schedule a pickup on ${pickupDate} at ${formattedTime}. ${
-        specialInstructions ? "Notes: " + specialInstructions : ""
-      }`;
-
-      const phone = "9149418161";
-      const url = `https://wa.me/${phone}?text=${encodeURIComponent(message)}`;
-
-      window.open(url, "_blank");
-    }
+    sendToWhatsapp({ message });
 
     setSubmitted(true);
-
-    // Simulate closing after 1.5 seconds
-    setTimeout(() => {
-      setSubmitted(false);
-      setPickupDate("");
-      setPickupTime("");
-      setSpecialInstructions("");
-      onClose();
-    }, 1500);
   };
 
   if (!isOpen) return null;
@@ -65,9 +43,14 @@ export default function SchedulePickupForm({
       <div className="bg-white dark:bg-gray-900 rounded-2xl shadow-2xl w-full max-w-md p-6 sm:p-8">
         {/* Header */}
         <div className="mb-6">
-          <div className="flex items-center gap-2 text-blue-800 dark:text-blue-300 text-2xl font-bold">
-            <Truck className="w-6 h-6" />
-            <span>Schedule Pickup</span>
+          <div className="flex items-center justify-between space-x-2 text-blue-900 text-2xl font-bold">
+            <div>
+              <Truck className="w-6 h-6" />
+              <span>Schedule Pickup</span>
+            </div>
+            <div>
+              <X className="h-6 w-6 cursor-pointer" onClick={onClose} />
+            </div>
           </div>
           <p className="text-sm text-gray-600 dark:text-gray-400 mt-1">
             Select a pickup date and time that works best for you.

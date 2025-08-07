@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { Truck, X } from "lucide-react";
+import sendToWhatsapp from "../utils/whatsapp";
 
 export default function BookingForm({
   isOpen,
@@ -58,9 +59,35 @@ export default function BookingForm({
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    console.log("Submitted:", formData);
+    const {
+      name,
+      phone,
+      email,
+      address,
+      pincode,
+      serviceType,
+      specificServices,
+      pickupDate,
+      pickupTime,
+      specialInstructions,
+    } = formData;
+    const message = `
+     *New Service Request*
+
+Name: ${name}
+Phone: ${phone}
+Email: ${email}
+Address: ${address}
+Pincode: ${pincode}
+Service Type: ${serviceType}
+Specific Services: ${specificServices}
+Pickup Date: ${pickupDate}
+Pickup Time: ${pickupTime}
+Special Instructions: ${specialInstructions}
+`;
+    sendToWhatsapp({ message });
     onClose();
-    setStep(1); // reset step when form closes
+    setStep(1);
   };
 
   const canGoNext =
@@ -78,7 +105,7 @@ export default function BookingForm({
             <div className="flex items-center justify-between space-x-2 text-blue-900 text-2xl font-bold">
               <div>
                 <Truck className="h-6 w-6" />
-                Book Your Pickup
+                Book Your Order
               </div>
               <div>
                 <X className="h-6 w-6 cursor-pointer" onClick={onClose} />
