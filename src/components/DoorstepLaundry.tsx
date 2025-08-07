@@ -1,15 +1,24 @@
 import { Shield, Star, Timer, Truck } from "lucide-react";
 import BookingForm from "./BookingForm";
 import { useState } from "react";
+import heroBg from "../assets/bg-img-home.jpg";
+
 
 function DoorstepLaundry() {
   const [isBookingOpen, setIsBookingOpen] = useState(false);
 
   return (
     <section
-      id="home"
-      className="bg-gradient-to-br from-white via-blue-50 to-sky-100 py-16 sm:py-20 md:py-24 scroll-mt-24"
-    >
+  id="home"
+  style={{
+    backgroundImage: `url(${heroBg})`,
+    backgroundSize: "cover",
+    backgroundPosition: "center",
+    backgroundRepeat: "no-repeat",
+  }}
+  className="py-16 sm:py-20 md:py-24 scroll-mt-24"
+>
+
       <BookingForm
         isOpen={isBookingOpen}
         onClose={() => setIsBookingOpen(false)}
@@ -29,7 +38,7 @@ function DoorstepLaundry() {
           </h2>
 
           {/* Subtext */}
-          <p className="text-base sm:text-lg md:text-xl text-gray-600 mb-10 leading-relaxed max-w-2xl mx-auto">
+          <p className="text-base sm:text-lg md:text-xl font-semibold !text-black bg-white/70 px-4 py-2 rounded mb-10 leading-relaxed max-w-2xl mx-auto" >
             Experience professional fabric care with fast turnaround, affordable pricing,
             and unmatched convenience — all from the comfort of your home.
           </p>
@@ -51,15 +60,15 @@ function DoorstepLaundry() {
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 sm:gap-6 max-w-3xl mx-auto text-gray-700 text-sm sm:text-base">
             <div className="flex items-center justify-center gap-2">
               <Shield className="h-5 w-5 text-blue-600" aria-hidden="true" />
-              <span className="font-medium">Safe & Hygienic</span>
+              <span className="font-bold text-black">Safe & Hygienic</span>
             </div>
             <div className="flex items-center justify-center gap-2">
               <Timer className="h-5 w-5 text-sky-600" aria-hidden="true" />
-              <span className="font-medium">Same-Day Delivery</span>
+              <span className="font-bold text-black">Same-Day Delivery</span>
             </div>
             <div className="flex items-center justify-center gap-2">
               <Star className="h-5 w-5 text-yellow-500" aria-hidden="true" />
-              <span className="font-medium">Rated 5 Stars</span>
+              <span className="font-bold text-black">Rated 5 Stars</span>
             </div>
           </div>
         </div>

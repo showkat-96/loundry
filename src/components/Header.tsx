@@ -1,13 +1,21 @@
 import { Clock, Phone, Truck, Menu, Sparkles } from "lucide-react";
 import { useState } from "react";
 import BookingForm from "./BookingForm";
+import heroBg from "../assets/bg-img-header.jpg";
 
 function Header() {
   const [isBookingOpen, setIsBookingOpen] = useState(false);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   return (
-    <header className="bg-white shadow-md border-b w-full">
+    <header className="bg-white shadow-md border-b w-full"
+  style={{
+    backgroundImage: `linear-gradient(to bottom right, rgba(255,255,255,0.7), rgba(224,242,254,0.7)), url(${heroBg})`,
+    backgroundSize: "cover",
+    backgroundPosition: "center",
+    backgroundRepeat: "no-repeat",
+    filter: "brightness(1.1)",
+  }}>
       {/* Booking Form Modal */}
       <BookingForm
         isOpen={isBookingOpen}
@@ -74,7 +82,7 @@ function Header() {
           {/* Mobile Menu Toggle */}
           <div className="md:hidden">
             <button onClick={() => setIsMenuOpen(!isMenuOpen)}>
-              <Menu className="h-6 w-6 text-blue-700" />
+              <Menu className="h-6 w-6 text-white-700" />
             </button>
           </div>
 
