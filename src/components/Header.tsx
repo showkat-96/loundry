@@ -47,7 +47,7 @@ function Header() {
             {/* Right: Pickup Info */}
             <div className="flex items-center gap-1 mt-1 md:mt-0">
               <Truck className="h-4 w-4" />
-              <span className="text-white">Free pickup & delivery in city</span>
+              <span className="text-white">Free pickup & delivery in Pulwama</span>
             </div>
           </div>
         </div>
