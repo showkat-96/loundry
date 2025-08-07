@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Truck, X } from "lucide-react";
-import sendToWhatsapp from "../utils/whatsapp";
+import { sendToWhatsapp } from "../utils/channel";
 
 export default function SchedulePickupForm({
   isOpen,
@@ -41,19 +41,18 @@ export default function SchedulePickupForm({
     <div className="fixed inset-0 z-50 bg-black/50 flex items-center justify-center px-4">
       <div className="bg-white dark:bg-gray-900 rounded-2xl shadow-2xl w-full max-w-md p-6 sm:p-8 relative">
         {/* Close Button */}
-        <button
-          className="absolute top-4 right-4 text-gray-500 hover:text-gray-800 dark:hover:text-white"
-          onClick={onClose}
-        >
-          <X className="h-6 w-6" />
-        </button>
 
         {/* Header */}
-        <div className="flex items-center gap-2 mb-6">
-          <Truck className="w-6 h-6 text-blue-700" />
-          <h2 className="text-2xl font-bold text-blue-900 dark:text-blue-300">
-            Schedule Pickup
-          </h2>
+        <div className="flex items-center justify-between gap-2 mb-6">
+          <div>
+            <Truck className="w-6 h-6 text-blue-700" />
+            <h2 className="text-2xl font-bold text-blue-900 dark:text-blue-300">
+              Schedule Pickup
+            </h2>
+          </div>
+          <div className="cursor-pointer">
+            <X className="h-6 w-6" onClick={onClose} />
+          </div>
         </div>
         <p className="text-sm text-gray-600 dark:text-gray-400 mb-4">
           Select a pickup date and time that works best for you.

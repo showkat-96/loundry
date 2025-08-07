@@ -6,7 +6,12 @@ import BookingForm from "./BookingForm";
 function GetInTouch() {
   const [isPickupOpen, setIsPickupOpen] = useState(false);
   const [isBookingOpen, setIsBookingOpen] = useState(false);
+  const [channel, setChannel] = useState<"whatsapp" | "email">("whatsapp");
 
+  const handleDialog = (medium: "whatsapp" | "email") => {
+    setChannel(medium);
+    setIsBookingOpen(true);
+  };
   return (
     <>
       <SchedulePickupForm
@@ -16,6 +21,7 @@ function GetInTouch() {
       <BookingForm
         isOpen={isBookingOpen}
         onClose={() => setIsBookingOpen(false)}
+        channel={channel}
       />
 
       <section id="contact" className="py-16 sm:py-20 bg-white text-gray-800">
@@ -27,7 +33,8 @@ function GetInTouch() {
                 Get In Touch
               </h2>
               <p className="text-base sm:text-lg text-gray-600 max-w-2xl mx-auto">
-                Ready to experience hassle-free laundry service? Contact us today!
+                Ready to experience hassle-free laundry service? Contact us
+                today!
               </p>
             </div>
 
@@ -48,7 +55,10 @@ function GetInTouch() {
                   href="tel:+919596100461"
                   className="text-sky-600 hover:text-sky-800 font-medium transition"
                 >
-                  +91-9596100461
+                  <button className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-6 py-3 text-base font-medium bg-blue-600 text-white rounded-full hover:bg-blue-700 transition">
+                    <Phone className="h-5 w-5 mr-2" />
+                    Book via Call
+                  </button>
                 </a>
               </div>
 
@@ -63,12 +73,20 @@ function GetInTouch() {
                 <p className="text-gray-600 text-sm sm:text-base mb-2">
                   Quick responses guaranteed
                 </p>
-                <a
+
+                <button
+                  onClick={() => handleDialog("email")}
+                  className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-6 py-3 text-base font-medium bg-blue-600 text-white rounded-full hover:bg-blue-700 transition"
+                >
+                  <Mail className="h-5 w-5 mr-2" />
+                  Book via Email
+                </button>
+                {/* <a
                   href="mailto:professionalserviceslaundry@gmail.com"
                   className="text-blue-600 hover:text-blue-800 font-medium transition"
                 >
                   professionalserviceslaundry@gmail.com
-                </a>
+                </a> */}
               </div>
 
               {/* WhatsApp */}

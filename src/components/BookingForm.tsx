@@ -1,17 +1,20 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Truck, X } from "lucide-react";
-import sendToWhatsapp from "../utils/whatsapp";
+import { sendEmail, sendToWhatsapp } from "../utils/channel";
 
 export default function BookingForm({
   isOpen,
   onClose,
+  channel,
 }: {
   isOpen: boolean;
   onClose: () => void;
+  channel: "whatsapp" | "email";
 }) {
   const today = new Date().toISOString().split("T")[0];
-
   const [step, setStep] = useState(1);
+  const [sending, setSending] = useState(false);
+  const [sent, setSent] = useState("");
 
   const [formData, setFormData] = useState({
     name: "",
@@ -25,6 +28,10 @@ export default function BookingForm({
     pickupTime: "",
     specialInstructions: "",
   });
+
+  useEffect(() => {
+    setSent("");
+  }, [channel]);
 
   const services = {
     clothing: ["Shirts", "Pants", "T-Shirts"],
@@ -57,37 +64,58 @@ export default function BookingForm({
     return services[formData.serviceType as keyof typeof services] || [];
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    const {
-      name,
-      phone,
-      email,
-      address,
-      pincode,
-      serviceType,
-      specificServices,
-      pickupDate,
-      pickupTime,
-      specialInstructions,
-    } = formData;
-    const message = `
-     *New Service Request*
+  const handleSubmit = async (e: React.FormEvent) => {
+    try {
+      setSent("");
+      e.preventDefault();
+      const {
+        name,
+        phone,
+        email,
+        address,
+        pincode,
+        serviceType,
+        specificServices,
+        pickupDate,
+        pickupTime,
+        specialInstructions,
+      } = formData;
+      const message = `
+                  *New Service Request*
 
-Name: ${name}
-Phone: ${phone}
-Email: ${email}
-Address: ${address}
-Pincode: ${pincode}
-Service Type: ${serviceType}
-Specific Services: ${specificServices}
-Pickup Date: ${pickupDate}
-Pickup Time: ${pickupTime}
-Special Instructions: ${specialInstructions}
-`;
-    sendToWhatsapp({ message });
-    onClose();
-    setStep(1);
+              Name: ${name}
+              Phone: ${phone}
+              Email: ${email}
+              Address: ${address}
+              Pincode: ${pincode}
+              Service Type: ${serviceType}
+              Specific Services: ${specificServices}
+              Pickup Date: ${pickupDate}
+              Pickup Time: ${pickupTime}
+              Special Instructions: ${specialInstructions}
+              `;
+      if (channel === "email") {
+        setSending(true);
+        const templateParams = {
+          to_name: email,
+          from_name: "shyxum96@gmail.com",
+          message: message,
+        };
+
+        await sendEmail(templateParams);
+      } else {
+        sendToWhatsapp({ message });
+      }
+      setSent("success");
+      setTimeout(() => {
+        onClose();
+        setStep(1);
+      }, 3000);
+    } catch (error) {
+      console.error(error);
+      setSending(true);
+      setSent("failed");
+    }
   };
 
   const canGoNext =
@@ -113,6 +141,36 @@ Special Instructions: ${specialInstructions}
             </div>
             <p className="text-sm text-gray-600 mt-1">Step {step} of 2</p>
           </div>
+          <>{sending && <p>Sending</p>}</>
+          {["failed", "success"].includes(sent) && (
+            <>
+              <div
+                className={`${
+                  sent === "success" ? "bg-teal-100" : "bg-red-100"
+                } border-t-4 border-teal-500 rounded-b text-teal-900 px-4 py-3 shadow-md mb-2`}
+                role="alert"
+              >
+                <div className="flex justify-center">
+                  <div className="py-1">
+                    <svg
+                      className="fill-current h-6 w-6 text-teal-500 mr-4"
+                      xmlns="http://www.w3.org/2000/svg"
+                      viewBox="0 0 20 20"
+                    >
+                      <path d="M2.93 17.07A10 10 0 1 1 17.07 2.93 10 10 0 0 1 2.93 17.07zm12.73-1.41A8 8 0 1 0 4.34 4.34a8 8 0 0 0 11.32 11.32zM9 11V9h2v6H9v-4zm0-6h2v2H9V5z" />
+                    </svg>
+                  </div>
+                  <div>
+                    <p className="font-bold">Message</p>
+                    <p className="text-sm">
+                      Message sent{" "}
+                      {sent === "success" ? "Successfully" : "Failed"}
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </>
+          )}
 
           {/* Form */}
           <form onSubmit={handleSubmit} className="space-y-6">
