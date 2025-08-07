@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { Truck, X } from "lucide-react";
 import { sendEmail, sendToWhatsapp } from "../utils/channel";
 
@@ -28,10 +28,6 @@ export default function BookingForm({
     pickupTime: "",
     specialInstructions: "",
   });
-
-  useEffect(() => {
-    setSent("");
-  }, [channel]);
 
   const services = {
     clothing: ["Shirts", "Pants", "T-Shirts"],
