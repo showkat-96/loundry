@@ -45,8 +45,17 @@ button {
   font-weight: 500;
   transition: background-color 0.3s ease;
   cursor: pointer;
+  border: none;
 }
 
 button:hover {
   background-color: var(--color-primary-light);
+  color: white;
 }
+
+.selected-button {
+  background-color: rgb(84, 206, 223);
+  color: #fff;
+}
+
+ 

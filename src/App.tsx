@@ -18,6 +18,7 @@ function App() {
         <Route path="/our-services" element={<OurServices />} />
         <Route path="/get-in-touch" element={<GetInTouch />} />
         <Route path="/services/:name" element={<ServiceDetails />} />
+
         <Route path="*" element={<Home />} />
       </Route>
     </Routes>

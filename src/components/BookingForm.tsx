@@ -136,7 +136,9 @@ Pickup Time: ${pickupTime}
             <Truck className="h-6 w-6" />
             Book Your Order
           </div>
-          <X className="h-6 w-6 cursor-pointer" onClick={onClose} />
+          <div>
+            <X className="h-6 w-6 cursor-pointer" onClick={onClose} />
+          </div>
         </div>
 
         {sending && <p className="text-sm text-gray-500">Sending...</p>}
@@ -289,7 +291,7 @@ Pickup Time: ${pickupTime}
                   className="w-full flex items-center justify-center gap-2 bg-blue-600 text-white rounded-md px-4 py-2 hover:bg-blue-700 disabled:opacity-50"
                 >
                   <Mail className="w-4 h-4" />
-                  Book via Email
+                  Email
                 </button>
                 <button
                   onClick={(e) => handleSubmit(e, "Whatsapp")}
@@ -297,7 +299,7 @@ Pickup Time: ${pickupTime}
                   className="w-full flex items-center justify-center gap-2 bg-blue-600 text-white rounded-md px-4 py-2 hover:bg-blue-700 disabled:opacity-50"
                 >
                   <MessageCircle className="w-4 h-4" />
-                  Book via Whatsapp
+                  Whatsapp
                 </button>
               </>
             ) : (
@@ -307,7 +309,7 @@ Pickup Time: ${pickupTime}
                 className="w-full flex items-center justify-center gap-2 bg-blue-600 text-white rounded-md px-4 py-2 hover:bg-blue-700 disabled:opacity-50"
               >
                 <MessageCircle className="w-4 h-4" />
-                Book via {channel}
+                {channel}
               </button>
             )}
           </div>

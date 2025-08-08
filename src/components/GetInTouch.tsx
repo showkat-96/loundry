@@ -14,10 +14,9 @@ function GetInTouch() {
   };
   return (
     <>
-      <SchedulePickupForm
-        isOpen={isPickupOpen}
-        onClose={() => setIsPickupOpen(false)}
-      />
+      {isPickupOpen && (
+        <SchedulePickupForm onClose={() => setIsPickupOpen(false)} />
+      )}
       {isBookingOpen && (
         <BookingForm
           onClose={() => setIsBookingOpen(false)}
@@ -57,7 +56,7 @@ function GetInTouch() {
                 >
                   <button className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-2 py-2 text-base font-medium bg-blue-600 text-white rounded-full hover:bg-blue-700 transition">
                     <Phone className="h-5 w-5 mr-2" />
-                    Book via Call
+                    Call
                   </button>
                 </a>
               </div>
@@ -79,7 +78,7 @@ function GetInTouch() {
                   className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-2 py-2 text-base font-medium bg-blue-600 text-white rounded-full hover:bg-blue-700 transition"
                 >
                   <Mail className="h-5 w-5 mr-2" />
-                  Book via Email
+                  Email
                 </button>
               </div>
 
@@ -99,7 +98,7 @@ function GetInTouch() {
                   className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-2 py-2 text-base font-medium bg-blue-600 text-white rounded-full hover:bg-blue-700 transition"
                 >
                   <MessageCircle className="h-5 w-5 mr-2" />
-                  Book via WhatsApp
+                  WhatsApp
                 </button>
               </div>
             </div>
