@@ -2,16 +2,16 @@ import { Heart, Shield, Timer, Truck } from "lucide-react";
 
 function WhyChooseUs() {
   return (
-    <section id="about" className="py-16 sm:py-20 bg-white scroll-mt-24">
-      <div className="max-w-6xl mx-auto px-4 sm:px-6">
+    <section id="about" className="py-8 sm:py-20 bg-white scroll-mt-24">
+      <div className="max-w-6xl mx-auto px-2 sm:px-2">
         {/* Heading */}
         <div className="text-center mb-12 sm:mb-16">
-          <h2 className="text-3xl sm:text-4xl font-extrabold text-blue-900 mb-4">
+          <h2 className="text-3xl sm:text-4xl font-extrabold text-blue-900 mb-2">
             Why Choose Us?
           </h2>
           <p className="text-sm sm:text-base text-gray-600 max-w-2xl mx-auto">
-            We’re committed to delivering premium quality laundry and dry cleaning
-            services — backed by care, speed, and convenience.
+            We’re committed to delivering premium quality laundry and dry
+            cleaning services — backed by care, speed, and convenience.
           </p>
         </div>
 
@@ -21,10 +21,10 @@ function WhyChooseUs() {
             ({ title, description, icon: Icon, bgColor, iconColor }) => (
               <div
                 key={title}
-                className="text-center px-4 py-6 rounded-2xl shadow hover:shadow-md transition duration-300 bg-white"
+                className="text-center px-2 py-2 rounded-2xl shadow hover:shadow-md transition duration-300 bg-white"
               >
                 <div
-                  className={`rounded-full p-5 w-20 h-20 mx-auto mb-4 flex items-center justify-center ${bgColor}`}
+                  className={`rounded-full p-2 w-20 h-20 mx-auto mb-2 flex items-center justify-center ${bgColor}`}
                 >
                   <Icon className={`h-8 w-8 ${iconColor}`} aria-hidden="true" />
                 </div>

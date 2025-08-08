@@ -1,21 +1,26 @@
-import Header from "./components/Header";
-import Footer from "./components/Footer";
-import DoorstepLaundry from "./components/DoorstepLaundry";
-import GetInTouch from "./components/GetInTouch";
-import OurServices from "./components/OurServices";
-import WhyChooseUs from "./components/WhyChooseUs";
+import { Route, Routes } from "react-router-dom";
 import "./App.css";
+import Layout from "./components/Layout";
+import ServiceDetails from "./components/ServiceDetails";
+import Home from "./components/Home";
+import DoorstepLaundry from "./components/DoorstepLaundry";
+import WhyChooseUs from "./components/WhyChooseUs";
+import OurServices from "./components/OurServices";
+import GetInTouch from "./components/GetInTouch";
 
 function App() {
   return (
-    <>
-      <Header />
-      <DoorstepLaundry />
-      <WhyChooseUs />
-      <OurServices />
-      <GetInTouch />
-      <Footer />
-    </>
+    <Routes>
+      <Route path="/" element={<Layout />}>
+        <Route path="/" element={<Home />} />
+        <Route path="/doorstep-loundry" element={<DoorstepLaundry />} />
+        <Route path="/why-choose-us" element={<WhyChooseUs />} />
+        <Route path="/our-services" element={<OurServices />} />
+        <Route path="/get-in-touch" element={<GetInTouch />} />
+        <Route path="/services/:name" element={<ServiceDetails />} />
+        <Route path="*" element={<Home />} />
+      </Route>
+    </Routes>
   );
 }
 

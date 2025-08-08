@@ -8,15 +8,13 @@ function DoorstepLaundry() {
 
   return (
     <>
-      <BookingForm
-        isOpen={isBookingOpen}
-        onClose={() => setIsBookingOpen(false)}
-        channel={"whatsapp"}
-      />
+      {isBookingOpen && (
+        <BookingForm onClose={() => setIsBookingOpen(false)} channel={"all"} />
+      )}
 
       <section
         id="home"
-        className="relative py-16 sm:py-20 md:py-24 scroll-mt-24"
+        className="relative py-8 sm:py-20 md:py-24 scroll-mt-24"
       >
         {/* Background Image with Opacity */}
         <div
@@ -26,15 +24,15 @@ function DoorstepLaundry() {
         ></div>
 
         {/* Foreground Content */}
-        <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6">
+        <div className="relative z-10 max-w-7xl mx-auto px-2 sm:px-2">
           <div className="text-center">
             {/* Promo pill */}
-            <div className="inline-flex items-center px-4 py-1 mb-6 rounded-full bg-sky-100 text-sky-800 text-xs sm:text-sm font-medium hover:bg-sky-200 transition">
+            <div className="inline-flex items-center px-2 py-1 mb-2 rounded-full bg-sky-100 text-sky-800 text-xs sm:text-sm font-medium hover:bg-sky-200 transition">
               🚚 Free Pickup & Drop – Book Today
             </div>
 
             {/* Heading */}
-            <h2 className="text-3xl sm:text-4xl md:text-5xl font-extrabold text-blue-900 mb-5 sm:mb-6 leading-tight tracking-tight">
+            <h2 className="text-3xl sm:text-4xl md:text-5xl font-extrabold text-blue-900 mb-2 sm:mb-2 leading-tight tracking-tight">
               Premium Laundry &{" "}
               <span className="text-sky-600">
                 Dry Cleaning at Your Doorstep
@@ -42,18 +40,18 @@ function DoorstepLaundry() {
             </h2>
 
             {/* Subtext */}
-            <p className="text-base sm:text-lg md:text-xl font-semibold !text-black bg-white/70 px-4 py-2 rounded mb-10 leading-relaxed max-w-2xl mx-auto">
+            <p className="text-base sm:text-lg md:text-xl font-semibold !text-black px-2 py-2 rounded mb-8 leading-relaxed max-w-2xl mx-auto">
               Experience professional fabric care with fast turnaround,
               affordable pricing, and unmatched convenience — all from the
               comfort of your home.
             </p>
 
             {/* Action Buttons */}
-            <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center mb-14">
+            <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center mb-8">
               <button
                 type="button"
                 onClick={() => setIsBookingOpen(true)}
-                className="inline-flex items-center justify-center gap-2 text-base sm:text-lg px-6 sm:px-8 py-3 sm:py-4 rounded-full bg-blue-600 text-white hover:bg-blue-700 transition font-semibold shadow"
+                className="inline-flex items-center justify-center gap-2 text-base sm:text-lg px-2 sm:px-8 py-2 sm:py-2 rounded-full bg-blue-600 text-white hover:bg-blue-700 transition font-semibold shadow"
                 aria-label="Book Now"
               >
                 <Truck className="h-5 w-5" aria-hidden="true" />

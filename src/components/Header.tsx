@@ -2,6 +2,7 @@ import { Clock, Phone, Truck, Menu, Sparkles } from "lucide-react";
 import { useState } from "react";
 import BookingForm from "./BookingForm";
 import heroBg from "../assets/bg-img-header.jpg";
+import { Link } from "react-router-dom";
 
 function Header() {
   const [isBookingOpen, setIsBookingOpen] = useState(false);
@@ -9,11 +10,10 @@ function Header() {
 
   return (
     <>
-      <BookingForm
-        isOpen={isBookingOpen}
-        onClose={() => setIsBookingOpen(false)}
-        channel={"whatsapp"}
-      />
+      {isBookingOpen && (
+        <BookingForm onClose={() => setIsBookingOpen(false)} channel={"all"} />
+      )}
+
       <header
         className="bg-white shadow-md border-b w-full"
         style={{
@@ -28,7 +28,7 @@ function Header() {
 
         {/* Top Info Bar */}
         <div className="bg-blue-600 text-white text-xs sm:text-sm py-2">
-          <div className="max-w-screen-xl mx-auto px-4 flex flex-col md:flex-row justify-between items-center gap-1 md:gap-0">
+          <div className="max-w-screen-xl mx-auto px-2 flex flex-col md:flex-row justify-between items-center gap-1 md:gap-0">
             {/* Left: Phone & Hours */}
             <div className="flex flex-wrap justify-center md:justify-start gap-4">
               <a
@@ -46,19 +46,22 @@ function Header() {
 
             {/* Right: Pickup Info */}
             <div className="flex items-center gap-1 mt-1 md:mt-0">
-              <Truck className="h-4 w-4" />
+              <Truck className="cursor-pointer h-4 w-4" />
+
               <span className="text-white">Free pickup & delivery in city</span>
             </div>
           </div>
         </div>
 
         {/* Main Nav */}
-        <nav className="max-w-screen-xl mx-auto px-4 py-4">
+        <nav className="max-w-screen-xl mx-auto px-2 py-2">
           <div className="flex justify-between items-center">
             {/* Logo/Title */}
             <div className="flex items-center gap-2">
-              <div className="bg-blue-600 p-3 rounded-xl">
-                <Sparkles className="h-6 w-6 text-white" aria-hidden="true" />
+              <div className="bg-blue-600 p-2 rounded-xl">
+                <Link to={"/"}>
+                  <Sparkles className="h-6 w-6 text-white" aria-hidden="true" />
+                </Link>
               </div>
               <div>
                 <h1 className="text-xl sm:text-2xl font-bold !text-blue-800 leading-tight">
@@ -72,29 +75,35 @@ function Header() {
 
             {/* Desktop Navigation */}
             <div className="hidden md:flex items-center gap-6">
-              {["home", "about", "services", "contact"].map((section) => (
-                <a
-                  key={section}
-                  href={`#${section}`}
+              {[
+                { name: "home", url: "/" },
+                { name: "about", url: "/why-choose-us" },
+                { name: "services", url: "/our-services" },
+                { name: "contact", url: "/get-in-touch" },
+              ].map(({ name, url }) => (
+                <Link
+                  key={name}
+                  to={url}
                   className="text-gray-700 hover:text-blue-600 font-medium transition text-sm capitalize"
                 >
-                  {section}
-                </a>
+                  {name}
+                </Link>
               ))}
             </div>
 
             {/* Mobile Menu Toggle */}
             <div className="md:hidden">
-              <button onClick={() => setIsMenuOpen(!isMenuOpen)}>
-                <Menu className="h-6 w-6 text-white-700" />
-              </button>
+              <Menu
+                onClick={() => setIsMenuOpen(!isMenuOpen)}
+                className="h-6 w-6 text-white-700"
+              />
             </div>
 
             {/* Call-to-action */}
             <div className="hidden sm:flex items-center gap-2">
               <button
                 onClick={() => setIsBookingOpen(true)}
-                className="px-3 py-1.5 border border-blue-700 text-blue-700 rounded-md hover:bg-blue-50 transition text-sm"
+                className="px-2 py-1.5 border border-blue-700 text-blue-700 rounded-md hover:bg-blue-50 transition text-sm"
               >
                 Book Now
               </button>
@@ -103,21 +112,26 @@ function Header() {
 
           {/* Mobile Nav Menu */}
           {isMenuOpen && (
-            <div className="mt-4 flex flex-col gap-3 md:hidden">
+            <div className="mx-2 flex flex-col md:hidden">
               <div className="flex flex-wrap justify-center gap-4">
-                {["home", "about", "services", "contact"].map((section) => (
+                {[
+                  { name: "home", url: "/" },
+                  { name: "about", url: "/why-choose-us" },
+                  { name: "services", url: "/our-services" },
+                  { name: "contact", url: "/get-in-touch" },
+                ].map(({ name, url }) => (
                   <a
-                    key={section}
-                    href={`#${section}`}
+                    key={name}
+                    href={url}
                     className="text-gray-700 hover:text-blue-600 font-medium transition text-sm capitalize"
                   >
-                    {section}
+                    {name}
                   </a>
                 ))}
               </div>
-              <div className="flex justify-center gap-2 mt-2">
+              <div className="flex justify-center mt-2">
                 <button
-                  className="px-4 py-2 border border-blue-700 text-blue-700 rounded-md hover:bg-blue-50 transition text-sm"
+                  className="px-2 py-2 border border-blue-700 text-blue-700 rounded-md hover:bg-blue-50 transition text-sm"
                   onClick={() => setIsBookingOpen(true)}
                 >
                   Book Now

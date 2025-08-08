@@ -1,14 +1,15 @@
 import { Clock, Mail, Phone, Sparkles } from "lucide-react";
+import { Link } from "react-router-dom";
 
 function Footer() {
   return (
-    <footer className="bg-black text-white py-16">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6">
+    <footer className="bg-black text-white py-8">
+      <div className="max-w-7xl mx-auto px-2 sm:px-2">
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-10">
           {/* Company Info */}
           <div>
             <div className="flex items-start space-x-3 mb-5">
-              <div className="bg-blue-600 p-3 rounded-xl">
+              <div className="bg-blue-600 p-2 rounded-xl">
                 <Sparkles className="h-6 w-6 text-white" aria-hidden="true" />
               </div>
               <div>
@@ -29,18 +30,23 @@ function Footer() {
 
           {/* Quick Links */}
           <div>
-            <h4 className="text-lg font-semibold mb-4 !text-white">
+            <h4 className="text-lg font-semibold mb-2 !text-white">
               Quick Links
             </h4>
             <ul className="flex flex-row justify-center gap-3 text-sm   sm:flex-col sm:space-y-3 sm:gap-0">
-              {["Home", "About", "Services", "Contact"].map((link) => (
-                <li key={link}>
-                  <a
-                    href={`#${link.toLowerCase()}`}
+              {[
+                { name: "home", url: "/" },
+                { name: "about", url: "/why-choose-us" },
+                { name: "services", url: "/our-services" },
+                { name: "contact", url: "/get-in-touch" },
+              ].map(({ name, url }) => (
+                <li key={name}>
+                  <Link
+                    to={url}
                     className="text-blue-400 hover:text-white transition-colors block"
                   >
-                    {link}
-                  </a>
+                    {name}
+                  </Link>
                 </li>
               ))}
             </ul>
@@ -48,7 +54,7 @@ function Footer() {
 
           {/* Popular Services */}
           <div>
-            <h4 className="text-lg font-semibold mb-4 !text-white">
+            <h4 className="text-lg font-semibold mb-2 !text-white">
               Popular Services
             </h4>
             <ul className="space-y-3 text-sm text-blue-400">
@@ -61,7 +67,7 @@ function Footer() {
 
           {/* Contact Info */}
           <div>
-            <h4 className="text-base sm:text-lg font-semibold mb-4 !text-white">
+            <h4 className="text-base sm:text-lg font-semibold mb-2 !text-white">
               Contact Info
             </h4>
             <ul className="space-y-4 text-sm text-blue-400">
@@ -88,35 +94,35 @@ function Footer() {
                 <span>Mon–Sun: 7AM – 10PM</span>
               </li>
               <li className="flex items-center gap-3">
-      <div className="min-w-[20px]">
-        <svg
-          className="h-5 w-5 text-blue-400"
-          fill="none"
-          stroke="currentColor"
-          strokeWidth="2"
-          viewBox="0 0 24 24"
-        >
-          <path
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            d="M12 11.5a2.5 2.5 0 110-5 2.5 2.5 0 010 5z"
-          />
-          <path
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            d="M19.5 10.5c0 7.5-7.5 11.25-7.5 11.25S4.5 18 4.5 10.5a7.5 7.5 0 1115 0z"
-          />
-        </svg>
-      </div>
-      <a
-        href="https://www.google.com/maps?q=Your+Business+Location"
-        target="_blank"
-        rel="noopener noreferrer"
-        className="hover:text-white transition-colors"
-      >
-        Circular Road Pulwama.
-      </a>
-    </li>
+                <div className="min-w-[20px]">
+                  <svg
+                    className="h-5 w-5 text-blue-400"
+                    fill="none"
+                    stroke="currentColor"
+                    strokeWidth="2"
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      d="M12 11.5a2.5 2.5 0 110-5 2.5 2.5 0 010 5z"
+                    />
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      d="M19.5 10.5c0 7.5-7.5 11.25-7.5 11.25S4.5 18 4.5 10.5a7.5 7.5 0 1115 0z"
+                    />
+                  </svg>
+                </div>
+                <a
+                  href="https://www.google.com/maps?q=Your+Business+Location"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="hover:text-white transition-colors"
+                >
+                  Circular Road Pulwama.
+                </a>
+              </li>
             </ul>
           </div>
         </div>
