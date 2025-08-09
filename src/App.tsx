@@ -18,9 +18,8 @@ function App() {
         <Route path="/our-services" element={<OurServices />} />
         <Route path="/get-in-touch" element={<GetInTouch />} />
         <Route path="/our-services/:name" element={<ServiceDetails />} />
-
-        <Route path="*" element={<Home />} />
       </Route>
+      <Route path="*" element={<Home />} />
     </Routes>
   );
 }
