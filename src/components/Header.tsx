@@ -119,13 +119,13 @@ function Header() {
                 { name: "services", url: "/our-services" },
                 { name: "contact", url: "/get-in-touch" },
               ].map(({ name, url }) => (
-                <a
+                <Link
                   key={name}
-                  href={url}
+                  to={url}
                   className="text-gray-700 hover:text-blue-600 font-medium transition text-sm capitalize"
                 >
                   {name}
-                </a>
+                </Link>
               ))}
               <button
                 className="px-1 py-1 border border-blue-700 text-blue-700 rounded-md hover:bg-blue-50 transition text-sm"
