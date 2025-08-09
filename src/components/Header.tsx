@@ -112,31 +112,30 @@ function Header() {
 
           {/* Mobile Nav Menu */}
           {isMenuOpen && (
-            <div className="mx-2 flex flex-col md:hidden">
-              <div className="flex flex-wrap justify-center gap-4">
-                {[
-                  { name: "home", url: "/" },
-                  { name: "about", url: "/why-choose-us" },
-                  { name: "services", url: "/our-services" },
-                  { name: "contact", url: "/get-in-touch" },
-                ].map(({ name, url }) => (
-                  <a
-                    key={name}
-                    href={url}
-                    className="text-gray-700 hover:text-blue-600 font-medium transition text-sm capitalize"
-                  >
-                    {name}
-                  </a>
-                ))}
-              </div>
-              <div className="flex justify-center mt-2">
-                <button
-                  className="px-2 py-2 border border-blue-700 text-blue-700 rounded-md hover:bg-blue-50 transition text-sm"
-                  onClick={() => setIsBookingOpen(true)}
+            <div className="mx-2 flex justify-between items-center md:hidden gap-2">
+              {[
+                { name: "home", url: "/" },
+                { name: "about", url: "/why-choose-us" },
+                { name: "services", url: "/our-services" },
+                { name: "contact", url: "/get-in-touch" },
+              ].map(({ name, url }) => (
+                <a
+                  key={name}
+                  href={url}
+                  className="text-gray-700 hover:text-blue-600 font-medium transition text-sm capitalize"
                 >
-                  Book Now
-                </button>
-              </div>
+                  {name}
+                </a>
+              ))}
+              <button
+                className="px-1 py-1 border border-blue-700 text-blue-700 rounded-md hover:bg-blue-50 transition text-sm"
+                onClick={() => setIsBookingOpen(true)}
+                style={{
+                  padding: 4,
+                }}
+              >
+                Book Now
+              </button>
             </div>
           )}
         </nav>

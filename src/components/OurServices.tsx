@@ -28,7 +28,7 @@ const ServiceCard = ({
   return (
     <div
       className="cursor-pointer bg-white rounded-xl shadow-lg overflow-hidden"
-      onClick={() => navigate(`/services/${name}`)}
+      onClick={() => navigate(`/our-services/${name}`)}
     >
       <div
         className={`flex items-center gap-2 px-2 py-2 ${color} text-white font-semibold text-lg sm:text-xl`}

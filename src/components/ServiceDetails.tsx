@@ -48,7 +48,7 @@ const ServiceDetails: FC = () => {
         {Object.entries(servicePages).map(([key, { label }]) => (
           <button
             key={key}
-            onClick={() => navigate(`/services/${key}`)}
+            onClick={() => navigate(`/our-services/${key}`)}
             className={key === selected ? "selected-button" : ""}
           >
             {label}

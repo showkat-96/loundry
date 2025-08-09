@@ -13,7 +13,6 @@ export default function BookingForm({
   const [selectedChannel, setSelectedChannel] = useState(channel);
   const [sending, setSending] = useState(false);
   const [sent, setSent] = useState("");
-  const [errors, setErrors] = useState<{ [key: string]: string }>({});
 
   const [formData, setFormData] = useState({
     name: "",
@@ -22,7 +21,6 @@ export default function BookingForm({
     serviceType: "",
     specificServices: [] as string[],
     pickupDate: "",
-    pickupTime: "",
   });
 
   const services = {
@@ -32,9 +30,30 @@ export default function BookingForm({
     specialty: ["Baby Clothes", "Delicates"],
   };
 
+  const [errors, setErrors] = useState({
+    name: false,
+    phone: false,
+    address: false,
+    serviceType: false,
+    specificServices: false,
+    pickupDate: false,
+  });
+
+  const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = e.target;
+    setFormData({
+      ...formData,
+      [name]: value,
+    });
+    setErrors({
+      ...errors,
+      [name]: value?.trim() ? false : true,
+    });
+  };
+
   const handleInputChange = (field: string, value: string) => {
     setFormData((prev) => ({ ...prev, [field]: value }));
-    setErrors((prev) => ({ ...prev, [field]: "" })); // clear error when typing
+    setErrors((prev) => ({ ...prev, [field]: value ? false : true }));
   };
 
   const handleServiceToggle = (service: string, checked: boolean) => {
@@ -57,24 +76,6 @@ export default function BookingForm({
     return services[formData.serviceType as keyof typeof services] || [];
   };
 
-  const validateForm = () => {
-    const newErrors: { [key: string]: string } = {};
-
-    if (!formData.name.trim()) newErrors.name = "Name is required";
-    if (!formData.phone.trim()) {
-      newErrors.phone = "Phone number is required";
-    } else if (!/^\d{10}$/.test(formData.phone)) {
-      newErrors.phone = "Enter a valid 10-digit phone number";
-    }
-    if (!formData.serviceType) newErrors.serviceType = "Select a service type";
-    if (!formData.address.trim()) newErrors.address = "Address is required";
-    if (!formData.pickupDate) newErrors.pickupDate = "Pickup date is required";
-    if (!formData.pickupTime) newErrors.pickupTime = "Pickup time is required";
-
-    setErrors(newErrors);
-    return Object.keys(newErrors).length === 0;
-  };
-
   const handleSubmit = async (
     e: React.FormEvent,
     medium: "Whatsapp" | "Email" | "all"
@@ -82,16 +83,20 @@ export default function BookingForm({
     e.preventDefault();
     setSent("");
     setSelectedChannel(medium);
-    if (!validateForm()) return;
-    const {
-      name,
-      phone,
-      address,
-      serviceType,
-      specificServices,
-      pickupDate,
-      pickupTime,
-    } = formData;
+    let isValid = true;
+    const newErrors: Record<keyof typeof formData, boolean> = {} as any;
+    (Object.keys(formData) as (keyof typeof formData)[]).forEach((key) => {
+      const value = formData[key];
+      const fieldValid = value !== null && value !== undefined && value !== "";
+      newErrors[key] = !fieldValid;
+      if (!fieldValid) {
+        isValid = false;
+      }
+    });
+    setErrors(newErrors);
+    if (!isValid) return;
+    const { name, phone, address, serviceType, specificServices, pickupDate } =
+      formData;
 
     const message = `
 *New Service Request*
@@ -100,9 +105,8 @@ Phone: ${phone}
 Address: ${address}
 Service Type: ${serviceType}
 Specific Services: ${specificServices.join(", ")}
-Pickup Date: ${pickupDate}
-Pickup Time: ${pickupTime}
-    `;
+Pickup Date & time: ${new Date(pickupDate).toLocaleString()}
+     `;
 
     try {
       setSending(true);
@@ -128,8 +132,8 @@ Pickup Time: ${pickupTime}
   };
 
   return (
-    <div className="fixed inset-0 z-50 bg-black/50 flex items-center justify-center px-2">
-      <div className="bg-white rounded-lg shadow-xl max-w-2xl w-full max-h-[90vh] overflow-y-auto p-4">
+    <div className="fixed inset-0 z-50 bg-black/50 flex items-center justify-center px-2 mx-2">
+      <div className="bg-white dark:bg-gray-900 rounded-2xl shadow-2xl w-full max-w-md p-2 sm:p-8 relative">
         {/* Header */}
         <div className="flex justify-between items-center mb-4 text-blue-900 font-bold">
           <div className="flex items-center gap-2 text-xl">
@@ -157,41 +161,44 @@ Pickup Time: ${pickupTime}
         )}
 
         {/* Form */}
-        <form className="space-y-4">
-          {/* Name */}
+        <form className="space-y-5">
+          {(
+            [
+              { name: "name", type: "text", placeholder: "Name" },
+              { name: "phone", type: "phone", placeholder: "Phone" },
+              { name: "address", type: "text", placeholder: "Address" },
+              {
+                name: "pickupDate",
+                type: "datetime-local",
+                placeholder: "Pickup Date",
+              },
+            ] as {
+              name: keyof typeof formData;
+              type: string;
+              placeholder: string;
+            }[]
+          ).map(({ name, type, placeholder }) => (
+            <div key={name}>
+              <input
+                id={name}
+                name={name}
+                type={type}
+                {...(type === "datetime-local" ? { min: today } : {})}
+                className={`w-full border ${
+                  errors[name] ? "border-red-300" : "border-gray-300"
+                } dark:border-gray-700 rounded-md px-2 py-2 text-sm text-black dark:text-white bg-white dark:bg-gray-800 focus:outline-none`}
+                value={formData[name]}
+                onChange={onChange}
+                required
+                placeholder={placeholder}
+              />
+            </div>
+          ))}
           <div>
-            <label className="block text-sm font-medium">Name *</label>
-            <input
-              className="mt-1 block w-full border rounded-md px-2 py-2 text-sm"
-              value={formData.name}
-              onChange={(e) => handleInputChange("name", e.target.value)}
-            />
-            {errors.name && (
-              <p className="text-red-600 text-xs">{errors.name}</p>
-            )}
-          </div>
-
-          {/* Phone */}
-          <div>
-            <label className="block text-sm font-medium">Phone *</label>
-            <input
-              type="tel"
-              className="mt-1 block w-full border rounded-md px-2 py-2 text-sm"
-              value={formData.phone}
-              onChange={(e) => handleInputChange("phone", e.target.value)}
-            />
-            {errors.phone && (
-              <p className="text-red-600 text-xs">{errors.phone}</p>
-            )}
-          </div>
-
-          {/* Service Type */}
-          <div>
-            <label className="block text-sm font-medium">
-              Primary Service Type *
-            </label>
             <select
-              className="mt-1 block w-full border rounded-md px-2 py-2 text-sm"
+              className={`w-full border ${
+                errors.serviceType ? "border-red-300" : "border-gray-300"
+              } dark:border-gray-700 rounded-md px-2 py-2 text-sm text-black dark:text-white bg-white dark:bg-gray-800 focus:outline-none`}
               value={formData.serviceType}
               onChange={(e) => handleInputChange("serviceType", e.target.value)}
             >
@@ -210,9 +217,6 @@ Pickup Time: ${pickupTime}
           {/* Specific Services */}
           {formData.serviceType && (
             <div>
-              <label className="block text-sm font-medium mb-1">
-                Specific Services
-              </label>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-2 p-2 border rounded-md">
                 {getServiceOptions().map((service) => (
                   <label
@@ -232,56 +236,6 @@ Pickup Time: ${pickupTime}
               </div>
             </div>
           )}
-
-          {/* Address */}
-          <div>
-            <label className="block text-sm font-medium">Address *</label>
-            <textarea
-              className="mt-1 block w-full border rounded-md px-2 py-2 text-sm"
-              rows={3}
-              value={formData.address}
-              onChange={(e) => handleInputChange("address", e.target.value)}
-            />
-            {errors.address && (
-              <p className="text-red-600 text-xs">{errors.address}</p>
-            )}
-          </div>
-
-          {/* Pickup Date */}
-          <div>
-            <label className="block text-sm font-medium">Pickup Date *</label>
-            <input
-              type="date"
-              min={today}
-              className="mt-1 block w-full border rounded-md px-2 py-2 text-sm"
-              value={formData.pickupDate}
-              onChange={(e) => handleInputChange("pickupDate", e.target.value)}
-            />
-            {errors.pickupDate && (
-              <p className="text-red-600 text-xs">{errors.pickupDate}</p>
-            )}
-          </div>
-
-          {/* Pickup Time */}
-          <div>
-            <label className="block text-sm font-medium">Pickup Time *</label>
-            <select
-              className="mt-1 block w-full border rounded-md px-2 py-2 text-sm"
-              value={formData.pickupTime}
-              onChange={(e) => handleInputChange("pickupTime", e.target.value)}
-            >
-              <option value="">Select time slot</option>
-              <option value="morning">🌅 Morning (7–11 AM)</option>
-              <option value="afternoon">☀️ Afternoon (11–3 PM)</option>
-              <option value="evening">🌆 Evening (3–7 PM)</option>
-              <option value="night">🌙 Night (7–10 PM)</option>
-            </select>
-            {errors.pickupTime && (
-              <p className="text-red-600 text-xs">{errors.pickupTime}</p>
-            )}
-          </div>
-
-          {/* Submit */}
           <div className="flex justify-between gap-2">
             {channel === "all" ? (
               <>
