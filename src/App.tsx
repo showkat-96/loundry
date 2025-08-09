@@ -1,4 +1,4 @@
-import { Route, Routes } from "react-router-dom";
+import { Navigate, Route, Routes } from "react-router-dom";
 import "./App.css";
 import ServiceDetails from "./components/ServiceDetails";
 import Home from "./components/Home";
@@ -20,7 +20,7 @@ function App() {
         <Route path="/our-services" element={<OurServices />} />
         <Route path="/get-in-touch" element={<GetInTouch />} />
         <Route path="/our-services/:name" element={<ServiceDetails />} />
-        <Route path="*" element={<Home />} />
+        <Route path="*" element={<Navigate to="/" />} />
       </Routes>
       <Footer />
     </>
