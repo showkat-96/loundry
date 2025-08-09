@@ -31,6 +31,7 @@ const ServiceDetails: FC = () => {
 
   // Keep state in sync with URL param
   useEffect(() => {
+    window.scrollTo(0, 0);
     if (name) setSelected(name);
   }, [name]);
 
