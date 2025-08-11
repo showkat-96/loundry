@@ -236,6 +236,7 @@ Pickup Date & time: ${date} at ${time}
                   <label
                     key={option}
                     className="flex items-center text-sm gap-2"
+                    style={{ color: "grey" }}
                   >
                     <input
                       type="checkbox"
