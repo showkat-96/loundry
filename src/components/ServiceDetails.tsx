@@ -4,6 +4,7 @@ import HomeAndHeavyItemsDetails from "./HomeAndHeavyItemsDetails";
 import SpecialtyServicesDetails from "./SpecialtyServicesDetails";
 import ClothingServicesDetails from "./ClothingServicesDetails";
 import DryCleaningServicesDetails from "./DryCleaningServicesDetails";
+import BookingForm from "./BookingForm";
 
 const servicePages: Record<string, { label: string; component: FC }> = {
   clothing_services: {
@@ -29,7 +30,6 @@ const ServiceDetails: FC = () => {
   const navigate = useNavigate();
   const [selected, setSelected] = useState(name || "");
 
-  // Keep state in sync with URL param
   useEffect(() => {
     window.scrollTo(0, 0);
     if (name) setSelected(name);
@@ -42,10 +42,11 @@ const ServiceDetails: FC = () => {
   }
 
   const SelectedComponent = servicePages[selected].component;
+  const [isBookingOpen, setIsBookingOpen] = useState(false);
 
   return (
     <>
-      <div className="flex flex-wrap justify-center gap-2 my-2">
+      <div className="flex flex-wrap justify-center gap-2 m-2">
         {Object.entries(servicePages).map(([key, { label }]) => (
           <button
             key={key}
@@ -64,6 +65,19 @@ const ServiceDetails: FC = () => {
       >
         <SelectedComponent />
       </section>
+
+      <div className="mb-2">
+        <button
+          type="button"
+          onClick={() => setIsBookingOpen(true)}
+          aria-label="Book Now"
+        >
+          <span>Book Now</span>
+        </button>
+      </div>
+      {isBookingOpen && (
+        <BookingForm onClose={() => setIsBookingOpen(false)} channel={"all"} />
+      )}
     </>
   );
 };

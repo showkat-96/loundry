@@ -1,29 +1,23 @@
-import {
-  Shirt,
-  Home,
-  Sparkles,
-  Truck,
-  Package,
-  Clock,
-  CheckCircle,
-} from "lucide-react";
-import type { FC, JSX } from "react";
+import { Truck, Package, Clock, CheckCircle } from "lucide-react";
+import type { FC } from "react";
 import { useNavigate } from "react-router-dom";
+import { services, type Service } from "../utils/services";
 
 const ServiceCard = ({
   name,
   icon,
   title,
   color,
-  services,
+  types,
 }: {
   name: string;
-  icon: JSX.Element;
+  icon: any;
   title: string;
   color: string;
-  services: string[];
+  types: string[];
 }) => {
   const navigate = useNavigate();
+  const Icon = icon;
 
   return (
     <div
@@ -33,19 +27,17 @@ const ServiceCard = ({
       <div
         className={`flex items-center gap-2 px-2 py-2 ${color} text-white font-semibold text-lg sm:text-xl`}
       >
-        {icon}
+        <Icon className="w-5 h-5" aria-hidden="true" />
         <span>{title}</span>
       </div>
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 px-2 py-2">
-        {services.map((service, idx) => (
-          <div key={idx} className="flex items-start gap-2">
+        {types.map((type) => (
+          <div key={type} className="flex items-start gap-2">
             <CheckCircle
               className="text-green-500 w-5 h-5 mt-0.5"
               aria-hidden="true"
             />
-            <span className="text-gray-800 text-sm sm:text-base">
-              {service}
-            </span>
+            <span className="text-gray-800 text-sm sm:text-base">{type}</span>
           </div>
         ))}
       </div>
@@ -70,66 +62,16 @@ const OurServices: FC = () => {
 
         {/* Service Cards */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
-          <ServiceCard
-            name={"clothing_services"}
-            icon={<Shirt className="w-5 h-5" aria-hidden="true" />}
-            title="Clothing Services"
-            color="bg-gradient-to-r from-blue-600 to-blue-400"
-            services={[
-              "Wash & Fold",
-              "Only Iron",
-              "Stain Removal",
-              "Wash & Iron",
-              "Express Laundry",
-              "Premium Fragrance Wash",
-            ]}
-          />
-
-          <ServiceCard
-            name={"dry_cleaning_services"}
-            icon={<Shirt className="w-5 h-5" aria-hidden="true" />}
-            title="Dry Cleaning Services"
-            color="bg-gradient-to-r from-blue-600 to-indigo-500"
-            services={[
-              "Shirt Dry Cleaning",
-              "Saree Dry Cleaning",
-              "Woolens & Sweater Dry Clean",
-              "Suit / Blazer Dry Cleaning",
-              "Dress Dry Cleaning",
-              "Silk / Delicate Dry Cleaning",
-            ]}
-          />
-
-          <ServiceCard
-            name={"home_and_heavy_items"}
-            icon={<Home className="w-5 h-5" aria-hidden="true" />}
-            title="Home & Heavy Items"
-            color="bg-gradient-to-r from-sky-500 to-cyan-400"
-            services={[
-              "Bedsheet Cleaning",
-              "Comforter Cleaning",
-              "Curtain Cleaning",
-              "Sofa Cover Cleaning",
-              "Blanket Cleaning",
-              "Pillow & Cushion Cover Cleaning",
-              "Carpet & Rug Wash",
-              "Mattress Cover Cleaning",
-            ]}
-          />
-
-          <ServiceCard
-            name={"specialty_services"}
-            icon={<Sparkles className="w-5 h-5" aria-hidden="true" />}
-            title="Specialty Services"
-            color="bg-gradient-to-r from-purple-500 to-pink-400"
-            services={[
-              "Baby Clothes Wash",
-              "Leather Jacket Cleaning",
-              "Uniform Cleaning",
-              "Wedding Dress Dry Clean",
-              "Traditional Wear Cleaning",
-            ]}
-          />
+          {services.map(({ name, icon, title, color, types }: Service) => (
+            <ServiceCard
+              key={title}
+              name={name}
+              icon={icon}
+              title={title}
+              color={color}
+              types={types}
+            />
+          ))}
         </div>
 
         {/* Other Services */}

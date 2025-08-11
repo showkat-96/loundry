@@ -1,5 +1,6 @@
 import { Clock, Mail, Phone, Sparkles } from "lucide-react";
 import { Link } from "react-router-dom";
+import { services } from "../utils/services";
 
 function Footer() {
   return (
@@ -33,7 +34,7 @@ function Footer() {
             <h4 className="text-lg font-semibold mb-2 !text-white">
               Quick Links
             </h4>
-            <ul className="flex flex-row justify-center gap-3 text-sm   sm:flex-col sm:space-y-3 sm:gap-0">
+            <ul className="flex flex-row justify-center gap-3 text-sm sm:flex-col sm:space-y-3 sm:gap-0">
               {[
                 { name: "home", url: "/" },
                 { name: "about", url: "/why-choose-us" },
@@ -52,18 +53,25 @@ function Footer() {
             </ul>
           </div>
 
-          {/* Popular Services */}
           <div>
             <h4 className="text-lg font-semibold mb-2 !text-white">
               Popular Services
             </h4>
-            <ul className="space-y-3 text-sm text-blue-400">
-              <li>Wash & Fold</li>
-              <li>Dry Cleaning</li>
-              <li>Express Laundry</li>
-              <li>Pickup & Delivery</li>
+            <ul className="flex flex-row justify-center gap-3 text-sm sm:flex-col sm:space-y-3 sm:gap-0">
+              {services.map(({ name, title }) => (
+                <li key={name}>
+                  <Link
+                    to={`our-services/${name}`}
+                    className="text-blue-400 hover:text-white transition-colors block"
+                  >
+                    {title}
+                  </Link>
+                </li>
+              ))}
             </ul>
           </div>
+
+          {/* Popular Services */}
 
           {/* Contact Info */}
           <div>

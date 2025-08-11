@@ -9,7 +9,11 @@ export default function BookingForm({
   onClose: () => void;
   channel: "Whatsapp" | "Email" | "all";
 }) {
-  const today = new Date().toISOString().split("T")[0];
+  const now = new Date();
+
+  const today = now.toISOString().split("T")[0];
+  const currentTime = now.toTimeString().slice(0, 5);
+
   const [selectedChannel, setSelectedChannel] = useState(channel);
   const [sending, setSending] = useState(false);
   const [sent, setSent] = useState("");
@@ -20,7 +24,8 @@ export default function BookingForm({
     address: "",
     serviceType: "",
     specificServices: [] as string[],
-    pickupDate: "",
+    date: today,
+    time: currentTime,
   });
 
   const services = {
@@ -36,7 +41,8 @@ export default function BookingForm({
     address: false,
     serviceType: false,
     specificServices: false,
-    pickupDate: false,
+    date: false,
+    time: false,
   });
 
   const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -95,7 +101,7 @@ export default function BookingForm({
     });
     setErrors(newErrors);
     if (!isValid) return;
-    const { name, phone, address, serviceType, specificServices, pickupDate } =
+    const { name, phone, address, serviceType, specificServices, date, time } =
       formData;
 
     const message = `
@@ -105,7 +111,7 @@ Phone: ${phone}
 Address: ${address}
 Service Type: ${serviceType}
 Specific Services: ${specificServices.join(", ")}
-Pickup Date & time: ${new Date(pickupDate).toLocaleString()}
+Pickup Date & time: ${date} at ${time}
      `;
 
     try {
@@ -168,9 +174,14 @@ Pickup Date & time: ${new Date(pickupDate).toLocaleString()}
               { name: "phone", type: "phone", placeholder: "Phone" },
               { name: "address", type: "text", placeholder: "Address" },
               {
-                name: "pickupDate",
-                type: "datetime-local",
+                name: "date",
+                type: "date",
                 placeholder: "Pickup Date",
+              },
+              {
+                name: "time",
+                type: "time",
+                placeholder: "Pickup Time",
               },
             ] as {
               name: keyof typeof formData;
@@ -183,7 +194,7 @@ Pickup Date & time: ${new Date(pickupDate).toLocaleString()}
                 id={name}
                 name={name}
                 type={type}
-                {...(type === "datetime-local" ? { min: today } : {})}
+                {...(type === "date" ? { min: today } : {})}
                 className={`w-full border ${
                   errors[name] ? "border-red-300" : "border-gray-300"
                 } dark:border-gray-700 rounded-md px-2 py-2 text-sm text-black dark:text-white bg-white dark:bg-gray-800 focus:outline-none`}
@@ -213,7 +224,6 @@ Pickup Date & time: ${new Date(pickupDate).toLocaleString()}
               <p className="text-red-600 text-xs">{errors.serviceType}</p>
             )}
           </div>
-
           {/* Specific Services */}
           {formData.serviceType && (
             <div>

@@ -7,19 +7,25 @@ export default function SchedulePickupForm({
 }: {
   onClose: () => void;
 }) {
-  const today = new Date().toISOString().split("T")[0];
+  const now = new Date();
+
+  const today = now.toISOString().split("T")[0];
+  const currentTime = now.toTimeString().slice(0, 5);
+
   const [submitted, setSubmitted] = useState(false);
   const [sending, setSending] = useState(false);
   const [pickupData, setPickupData] = useState({
     name: "",
     phone: "",
-    pickupDate: "",
+    date: today,
+    time: currentTime,
     address: "",
   });
   const [errors, setErrors] = useState({
     name: false,
     phone: false,
-    pickupDate: false,
+    date: false,
+    time: false,
     address: false,
   });
 
@@ -60,10 +66,8 @@ export default function SchedulePickupForm({
       if (!isValid) return;
 
       setSending(true);
-      const { name, phone, address, pickupDate } = pickupData;
-      const message = `Hi, I'm ${name}, with phone ${phone} from ${address}. I would like to schedule a pickup on ${new Date(
-        pickupDate
-      ).toLocaleString()}.`;
+      const { name, phone, address, date, time } = pickupData;
+      const message = `Hi, I'm ${name}, with phone ${phone} from ${address}. I would like to schedule a pickup on ${date} at ${time}.`;
       if (channel === "Email") {
         await sendEmail({
           to_name: "",
@@ -121,9 +125,14 @@ export default function SchedulePickupForm({
                   { name: "phone", type: "phone", placeholder: "Phone" },
                   { name: "address", type: "text", placeholder: "Address" },
                   {
-                    name: "pickupDate",
-                    type: "datetime-local",
+                    name: "date",
+                    type: "date",
                     placeholder: "Pickup Date",
+                  },
+                  {
+                    name: "time",
+                    type: "time",
+                    placeholder: "Pickup Time",
                   },
                 ] as {
                   name: keyof typeof pickupData;
@@ -136,7 +145,7 @@ export default function SchedulePickupForm({
                     id={name}
                     name={name}
                     type={type}
-                    {...(type === "datetime-local" ? { min: today } : {})}
+                    {...(type === "date" ? { min: today } : {})}
                     className={`w-full border ${
                       errors[name] ? "border-red-300" : "border-gray-300"
                     } dark:border-gray-700 rounded-md px-2 py-2 text-sm text-black dark:text-white bg-white dark:bg-gray-800 focus:outline-none`}
