@@ -1,4 +1,4 @@
-import { Shirt, Home, Sparkles } from "lucide-react";
+import { Shirt, Home, Sparkles, Repeat, BedDouble, MapPin, ClipboardCheck, Truck, ScrollText } from "lucide-react";
 import type { FC, JSX } from "react";
 import { useNavigate } from "react-router-dom";
 import bgImage from "../assets/bg-img-home.jpg";
@@ -59,31 +59,66 @@ const OurServices: FC = () => {
         {/* Service Cards */}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
           <ServiceCard
-            name="clothing_services"
-            icon={<Shirt className="w-5 h-5" aria-hidden="true" />}
-            title="Clothing Services"
-            description="Wash, fold, iron, and more for your garments."
+            name="regular_wash_fold"
+            icon={<Repeat className="w-5 h-5" aria-hidden="true" />}
+            title="Regular Wash & Fold"
+            description="Everyday clothes washing, drying, and folding."
           />
 
           <ServiceCard
-            name="dry_cleaning_services"
+            name="dry_cleaning"
             icon={<Shirt className="w-5 h-5" aria-hidden="true" />}
             title="Dry Cleaning"
             description="Expert care for delicate and luxury fabrics."
           />
 
           <ServiceCard
-            name="home_and_heavy_items"
-            icon={<Home className="w-5 h-5" aria-hidden="true" />}
-            title="Home & Heavy Items"
-            description="Bedding, curtains, and other bulky items."
+            name="ironing_pressing"
+            icon={<ClipboardCheck className="w-5 h-5" aria-hidden="true" />}
+            title="Ironing & Pressing"
+            description="Professional ironing for a crisp, wrinkle-free finish."
           />
 
           <ServiceCard
-            name="specialty_services"
+            name="woolen_winter_garments"
+            icon={<BedDouble className="w-5 h-5" aria-hidden="true" />}
+            title="Woolen & Winter Garment Cleaning"
+            description="Special care for woolens, shawls, and heavy winter wear."
+          />
+
+          <ServiceCard
+            name="carpet_rug_cleaning"
+            icon={<ScrollText className="w-5 h-5" aria-hidden="true" />}
+            title="Carpet & Rug Cleaning"
+            description="Cleaning traditional Kashmiri carpets and rugs."
+          />
+
+          <ServiceCard
+            name="curtain_upholstery_cleaning"
+            icon={<Home className="w-5 h-5" aria-hidden="true" />}
+            title="Curtain & Upholstery Cleaning"
+            description="Washing curtains, sofa covers, and cushions."
+          />
+
+          <ServiceCard
+            name="household_linen_cleaning"
+            icon={<Truck className="w-5 h-5" aria-hidden="true" />}
+            title="Household Linen Cleaning"
+            description="Bed sheets, blankets, quilts, and pillow covers."
+          />
+
+          <ServiceCard
+            name="home_laundry_services"
+            icon={<MapPin className="w-5 h-5" aria-hidden="true" />}
+            title="Home Laundry Services"
+            description="Convenient pickup and delivery for residential customers."
+          />
+
+          <ServiceCard
+            name="hotel_laundry_services"
             icon={<Sparkles className="w-5 h-5" aria-hidden="true" />}
-            title="Specialty Services"
-            description="Wedding dresses, uniforms, leather & more."
+            title="Hotel Laundry Services"
+            description="Bulk laundry service for hotels and guest houses."
           />
         </div>
       </div>

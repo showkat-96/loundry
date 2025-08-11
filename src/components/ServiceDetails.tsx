@@ -1,34 +1,66 @@
 import { useState, useEffect, type FC } from "react";
 import { useParams, useNavigate } from "react-router-dom";
-import HomeAndHeavyItemsDetails from "./HomeAndHeavyItemsDetails";
-import SpecialtyServicesDetails from "./SpecialtyServicesDetails";
-import ClothingServicesDetails from "./ClothingServicesDetails";
-import DryCleaningServicesDetails from "./DryCleaningServicesDetails";
+
+import CarpetRugCleaningDetails from "./CarpetRugCleaningDetails";
+import CurtainUpholsteryCleaningDetails from "./CurtainUpholsteryCleaningDetails";
+import HomeLaundryServicesDetails from "./HomeLaundryServicesDetails";
+import HotelLaundryServicesDetails from "./HotelLaundryServicesDetails";
+import HouseholdLinenCleaningDetails from "./HouseholdLinenCleaningDetails";
+import IroningPressingDetails from "./IroningPressingDetails";
+import RegularWashFoldDetails from "./RegularWashFoldDetails";
+import WoolenWinterGarmentCleaningDetails from "./WoolenWinterGarmentCleaningDetails";
+import DryCleaningDetails from "./DryCleaningDetails";
+
 import bgImage from "../assets/bg-img-home.jpg";
 
 const servicePages: Record<
   string,
   { label: string; description: string; component: FC }
 > = {
-  clothing_services: {
-    label: "Clothing Services",
-    description: "Professional cleaning and care for your garments.",
-    component: ClothingServicesDetails,
+  regular_wash_fold: {
+    label: "Regular Wash & Fold",
+    description: "Everyday clothes washing, drying, and folding.",
+    component: RegularWashFoldDetails,
   },
-  dry_cleaning_services: {
-    label: "Dry Cleaning Services",
-    description: "Expert dry cleaning for delicate and special fabrics.",
-    component: DryCleaningServicesDetails,
+  dry_cleaning: {
+    label: "Dry Cleaning",
+    description: "Expert care for delicate and special fabrics.",
+    component: DryCleaningDetails,
   },
-  home_and_heavy_items: {
-    label: "Home & Heavy Items",
-    description: "Cleaning for bedding, curtains, carpets, and more.",
-    component: HomeAndHeavyItemsDetails,
+  ironing_pressing: {
+    label: "Ironing & Pressing",
+    description: "Professional ironing for a crisp, wrinkle-free finish.",
+    component: IroningPressingDetails,
   },
-  specialty_services: {
-    label: "Specialty Services",
-    description: "Custom solutions for unique laundry needs.",
-    component: SpecialtyServicesDetails,
+  woolen_winter_garments: {
+    label: "Woolen & Winter Garment Cleaning",
+    description: "Special care for woolens, shawls, and heavy winter wear.",
+    component: WoolenWinterGarmentCleaningDetails,
+  },
+  carpet_rug_cleaning: {
+    label: "Carpet & Rug Cleaning",
+    description: "Cleaning traditional Kashmiri carpets and rugs.",
+    component: CarpetRugCleaningDetails,
+  },
+  curtain_upholstery_cleaning: {
+    label: "Curtain & Upholstery Cleaning",
+    description: "Washing curtains, sofa covers, and cushions.",
+    component: CurtainUpholsteryCleaningDetails,
+  },
+  household_linen_cleaning: {
+    label: "Household Linen Cleaning",
+    description: "Bed sheets, blankets, quilts, and pillow covers.",
+    component: HouseholdLinenCleaningDetails,
+  },
+  home_laundry_services: {
+    label: "Home Laundry Services",
+    description: "Convenient pickup and delivery for residential customers.",
+    component: HomeLaundryServicesDetails,
+  },
+  hotel_laundry_services: {
+    label: "Hotel Laundry Services",
+    description: "Bulk laundry service for hotels and guest houses.",
+    component: HotelLaundryServicesDetails,
   },
 };
 
@@ -75,22 +107,6 @@ const ServiceDetails: FC = () => {
 
   return (
     <>
-      <div className="flex flex-wrap justify-center gap-2 my-4">
-        {Object.entries(servicePages).map(([key, { label }]) => (
-          <button
-            key={key}
-            onClick={() => navigate(`/our-services/${key}`)}
-            className={`px-4 py-2 rounded-md border transition-colors ${
-              key === selected
-                ? "bg-blue-600 text-white"
-                : "bg-gray-100 text-gray-800 hover:bg-gray-200"
-            }`}
-          >
-            {label}
-          </button>
-        ))}
-      </div>
-
       <section
         id="services"
         className="py-4 bg-gradient-to-b from-sky-50 to-white scroll-mt-2"
