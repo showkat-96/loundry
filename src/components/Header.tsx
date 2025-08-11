@@ -36,7 +36,7 @@ function Header() {
                 className="flex items-center gap-1 hover:underline"
               >
                 <Phone className="h-4 w-4" />
-                <span className="text-white">+91-9596100461</span>
+                <span className="text-white">+91-9596100461, +91-8899918922</span>
               </a>
               <div className="flex items-center gap-1">
                 <Clock className="h-4 w-4" />

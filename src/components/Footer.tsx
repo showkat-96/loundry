@@ -59,7 +59,7 @@ function Footer() {
               <li className="flex justify-center sm:justify-end items-center gap-2">
                 <Phone className="h-5 w-5" />
                 <a href="tel:+919596100461" className="hover:text-blue-400">
-                  +91-9596100461
+                  +91-9596100461, +91-8899918922
                 </a>
               </li>
               <li className="flex justify-center sm:justify-end items-center gap-2">
@@ -95,7 +95,7 @@ function Footer() {
                   />
                 </svg>
                 <a
-                  href="https://www.google.com/maps?q=Your+Business+Location"
+                  href="https://maps.app.goo.gl/1rqD52zdDi4GtszR8"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="hover:text-blue-400"

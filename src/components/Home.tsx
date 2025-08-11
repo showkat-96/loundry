@@ -7,8 +7,8 @@ function Home() {
   return (
     <>
       <DoorstepLaundry />
-      <WhyChooseUs />
       <OurServices />
+      <WhyChooseUs />
       <GetInTouch />
     </>
   );
