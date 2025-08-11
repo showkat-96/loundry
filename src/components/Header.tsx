@@ -45,11 +45,11 @@ function Header() {
             </div>
 
             {/* Right: Pickup Info */}
-            <div className="flex items-center gap-1 mt-1 md:mt-0">
-              <Truck className="cursor-pointer h-4 w-4" />
-
-              <span className="text-white">Free pickup & delivery in city</span>
-            </div>
+            <div className="flex flex-wrap items-center gap-2 mt-2 md:mt-0">
+               <Truck className="h-5 w-5 text-blue-300 flex-shrink-0" />
+              <span className="text-white font-semibold text-sm sm:text-base whitespace-nowrap"> Free pickup & delivery in <span className="underline">Pulwama</span>
+              </span>
+          </div>
           </div>
         </div>
 
