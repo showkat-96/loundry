@@ -1,16 +1,14 @@
 import React, { useState } from "react";
 import { Mail, MessageCircle, Truck, X } from "lucide-react";
 import { sendEmail, sendToWhatsapp } from "../utils/channel";
+import { timings } from "../utils/timing";
 
 export default function SchedulePickupForm({
   onClose,
 }: {
   onClose: () => void;
 }) {
-  const now = new Date();
-
-  const today = now.toISOString().split("T")[0];
-  const currentTime = now.toTimeString().slice(0, 5);
+  const today = new Date().toISOString().split("T")[0];
 
   const [submitted, setSubmitted] = useState(false);
   const [sending, setSending] = useState(false);
@@ -18,7 +16,7 @@ export default function SchedulePickupForm({
     name: "",
     phone: "",
     date: today,
-    time: currentTime,
+    time: "",
     address: "",
   });
   const [errors, setErrors] = useState({
@@ -39,6 +37,11 @@ export default function SchedulePickupForm({
       ...errors,
       [name]: value?.trim() ? false : true,
     });
+  };
+
+  const handleSelectTiming = (value: string) => {
+    setPickupData((prev) => ({ ...prev, time: value }));
+    setErrors((prev) => ({ ...prev, time: value ? false : true }));
   };
 
   const handleSubmit = async (
@@ -129,11 +132,6 @@ export default function SchedulePickupForm({
                     type: "date",
                     placeholder: "Pickup Date",
                   },
-                  {
-                    name: "time",
-                    type: "time",
-                    placeholder: "Pickup Time",
-                  },
                 ] as {
                   name: keyof typeof pickupData;
                   type: string;
@@ -156,7 +154,23 @@ export default function SchedulePickupForm({
                   />
                 </div>
               ))}
-
+              <div>
+                <select
+                  id={"timing"}
+                  className={`w-full border ${
+                    errors.time ? "border-red-300" : "border-gray-300"
+                  } dark:border-gray-700 rounded-md px-2 py-2 text-sm text-black dark:text-white bg-white dark:bg-gray-800 focus:outline-none`}
+                  value={pickupData.time}
+                  onChange={(e) => handleSelectTiming(e.target.value)}
+                >
+                  <option value={""}>{"Select Timing"}</option>
+                  {timings.map((timing) => (
+                    <option key={timing} value={timing}>
+                      {timing}
+                    </option>
+                  ))}
+                </select>
+              </div>
               {sending && <>Sending...</>}
               <div className="flex justify-between gap-2">
                 <>

@@ -1,46 +1,46 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Mail, MessageCircle, Truck, X } from "lucide-react";
 import { sendEmail, sendToWhatsapp } from "../utils/channel";
+import { services } from "../utils/services";
+import { timings } from "../utils/timing";
 
 export default function BookingForm({
   onClose,
   channel,
+  defaultService = "",
 }: {
   onClose: () => void;
   channel: "Whatsapp" | "Email" | "all";
+  defaultService?: string;
 }) {
-  const now = new Date();
+  const today = new Date().toISOString().split("T")[0];
 
-  const today = now.toISOString().split("T")[0];
-  const currentTime = now.toTimeString().slice(0, 5);
-
-  const [selectedChannel, setSelectedChannel] = useState(channel);
   const [sending, setSending] = useState(false);
   const [sent, setSent] = useState("");
+  const [selectedService, setSelectedService] = useState(defaultService || "");
+  const [selectedTypes, setSelectedTypes] = useState<string[]>([]);
+
+  useEffect(() => {
+    const types = services.find((s) => s.title === selectedService);
+    setSelectedTypes(types?.types || []);
+  }, [selectedService]);
 
   const [formData, setFormData] = useState({
     name: "",
     phone: "",
     address: "",
-    serviceType: "",
-    specificServices: [] as string[],
+    service: selectedService || "",
+    serviceTypes: selectedTypes,
     date: today,
-    time: currentTime,
+    time: "",
   });
-
-  const services = {
-    clothing: ["Shirts", "Pants", "T-Shirts"],
-    dryCleaning: ["Suits", "Dresses", "Coats"],
-    homeItems: ["Curtains", "Bedsheets", "Blankets"],
-    specialty: ["Baby Clothes", "Delicates"],
-  };
 
   const [errors, setErrors] = useState({
     name: false,
     phone: false,
     address: false,
-    serviceType: false,
-    specificServices: false,
+    service: false,
+    serviceTypes: false,
     date: false,
     time: false,
   });
@@ -57,29 +57,24 @@ export default function BookingForm({
     });
   };
 
-  const handleInputChange = (field: string, value: string) => {
-    setFormData((prev) => ({ ...prev, [field]: value }));
-    setErrors((prev) => ({ ...prev, [field]: value ? false : true }));
+  const handleSelectService = (value: string) => {
+    setFormData((prev) => ({ ...prev, service: value }));
+    setSelectedService(value);
+    setErrors((prev) => ({ ...prev, service: value ? false : true }));
+  };
+
+  const handleSelectTiming = (value: string) => {
+    setFormData((prev) => ({ ...prev, time: value }));
+    setErrors((prev) => ({ ...prev, time: value ? false : true }));
   };
 
   const handleServiceToggle = (service: string, checked: boolean) => {
     setFormData((prev) => ({
       ...prev,
-      specificServices: checked
-        ? [...prev.specificServices, service]
-        : prev.specificServices.filter((s) => s !== service),
+      serviceTypes: checked
+        ? [...prev.serviceTypes, service]
+        : prev.serviceTypes.filter((s) => s !== service),
     }));
-  };
-
-  const getServiceOptions = () => {
-    if (formData.serviceType === "mixed") {
-      return [
-        ...services.clothing,
-        ...services.dryCleaning,
-        ...services.homeItems,
-      ].slice(0, 6);
-    }
-    return services[formData.serviceType as keyof typeof services] || [];
   };
 
   const handleSubmit = async (
@@ -88,7 +83,6 @@ export default function BookingForm({
   ) => {
     e.preventDefault();
     setSent("");
-    setSelectedChannel(medium);
     let isValid = true;
     const newErrors: Record<keyof typeof formData, boolean> = {} as any;
     (Object.keys(formData) as (keyof typeof formData)[]).forEach((key) => {
@@ -101,7 +95,7 @@ export default function BookingForm({
     });
     setErrors(newErrors);
     if (!isValid) return;
-    const { name, phone, address, serviceType, specificServices, date, time } =
+    const { name, phone, address, service, serviceTypes, date, time } =
       formData;
 
     const message = `
@@ -109,14 +103,14 @@ export default function BookingForm({
 Name: ${name}
 Phone: ${phone}
 Address: ${address}
-Service Type: ${serviceType}
-Specific Services: ${specificServices.join(", ")}
+Service Type: ${service}
+Specific Services: ${serviceTypes.join(", ")}
 Pickup Date & time: ${date} at ${time}
      `;
 
     try {
       setSending(true);
-      if (selectedChannel === "Email") {
+      if (medium === "Email") {
         await sendEmail({
           to_name: "",
           from_name: "shyxum96@gmail.com",
@@ -178,11 +172,6 @@ Pickup Date & time: ${date} at ${time}
                 type: "date",
                 placeholder: "Pickup Date",
               },
-              {
-                name: "time",
-                type: "time",
-                placeholder: "Pickup Time",
-              },
             ] as {
               name: keyof typeof formData;
               type: string;
@@ -207,40 +196,55 @@ Pickup Date & time: ${date} at ${time}
           ))}
           <div>
             <select
+              id={"timing"}
               className={`w-full border ${
-                errors.serviceType ? "border-red-300" : "border-gray-300"
+                errors.time ? "border-red-300" : "border-gray-300"
               } dark:border-gray-700 rounded-md px-2 py-2 text-sm text-black dark:text-white bg-white dark:bg-gray-800 focus:outline-none`}
-              value={formData.serviceType}
-              onChange={(e) => handleInputChange("serviceType", e.target.value)}
+              value={formData.time}
+              onChange={(e) => handleSelectTiming(e.target.value)}
             >
-              <option value="">Select service</option>
-              <option value="clothing">👕 Clothing</option>
-              <option value="dryCleaning">🧥 Dry Cleaning</option>
-              <option value="homeItems">🛏️ Home Items</option>
-              <option value="specialty">👶 Specialty</option>
-              <option value="mixed">🎯 Mixed</option>
+              <option value={""}>{"Select Timing"}</option>
+              {timings.map((timing) => (
+                <option key={timing} value={timing}>
+                  {timing}
+                </option>
+              ))}
             </select>
-            {errors.serviceType && (
-              <p className="text-red-600 text-xs">{errors.serviceType}</p>
-            )}
+          </div>
+          <div>
+            <select
+              id={"services"}
+              className={`w-full border ${
+                errors.service ? "border-red-300" : "border-gray-300"
+              } dark:border-gray-700 rounded-md px-2 py-2 text-sm text-black dark:text-white bg-white dark:bg-gray-800 focus:outline-none`}
+              value={formData.service}
+              onChange={(e) => handleSelectService(e.target.value)}
+            >
+              <option value={""}>{"Select Service"}</option>
+              {services.map(({ title }) => (
+                <option key={title} value={title}>
+                  {title}
+                </option>
+              ))}
+            </select>
           </div>
           {/* Specific Services */}
-          {formData.serviceType && (
+          {selectedTypes.length > 0 && (
             <div>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-2 p-2 border rounded-md">
-                {getServiceOptions().map((service) => (
+                {selectedTypes.map((option) => (
                   <label
-                    key={service}
+                    key={option}
                     className="flex items-center text-sm gap-2"
                   >
                     <input
                       type="checkbox"
-                      checked={formData.specificServices.includes(service)}
+                      checked={formData.serviceTypes.includes(option)}
                       onChange={(e) =>
-                        handleServiceToggle(service, e.target.checked)
+                        handleServiceToggle(option, e.target.checked)
                       }
                     />
-                    {service}
+                    {option}
                   </label>
                 ))}
               </div>

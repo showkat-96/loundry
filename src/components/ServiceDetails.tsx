@@ -1,119 +1,84 @@
-import { useState, useEffect, type FC } from "react";
-import { useParams, useNavigate } from "react-router-dom";
-
-import CarpetRugCleaningDetails from "./CarpetRugCleaningDetails";
-import CurtainUpholsteryCleaningDetails from "./CurtainUpholsteryCleaningDetails";
-import HomeLaundryServicesDetails from "./HomeLaundryServicesDetails";
-import HotelLaundryServicesDetails from "./HotelLaundryServicesDetails";
-import HouseholdLinenCleaningDetails from "./HouseholdLinenCleaningDetails";
-import IroningPressingDetails from "./IroningPressingDetails";
-import RegularWashFoldDetails from "./RegularWashFoldDetails";
-import WoolenWinterGarmentCleaningDetails from "./WoolenWinterGarmentCleaningDetails";
-import DryCleaningDetails from "./DryCleaningDetails";
-
-import bgImage from "../assets/bg-img-home.jpg";
-
-const servicePages: Record<
-  string,
-  { label: string; description: string; component: FC }
-> = {
-  regular_wash_fold: {
-    label: "Regular Wash & Fold",
-    description: "Everyday clothes washing, drying, and folding.",
-    component: RegularWashFoldDetails,
-  },
-  dry_cleaning: {
-    label: "Dry Cleaning",
-    description: "Expert care for delicate and special fabrics.",
-    component: DryCleaningDetails,
-  },
-  ironing_pressing: {
-    label: "Ironing & Pressing",
-    description: "Professional ironing for a crisp, wrinkle-free finish.",
-    component: IroningPressingDetails,
-  },
-  woolen_winter_garments: {
-    label: "Woolen & Winter Garment Cleaning",
-    description: "Special care for woolens, shawls, and heavy winter wear.",
-    component: WoolenWinterGarmentCleaningDetails,
-  },
-  carpet_rug_cleaning: {
-    label: "Carpet & Rug Cleaning",
-    description: "Cleaning traditional Kashmiri carpets and rugs.",
-    component: CarpetRugCleaningDetails,
-  },
-  curtain_upholstery_cleaning: {
-    label: "Curtain & Upholstery Cleaning",
-    description: "Washing curtains, sofa covers, and cushions.",
-    component: CurtainUpholsteryCleaningDetails,
-  },
-  household_linen_cleaning: {
-    label: "Household Linen Cleaning",
-    description: "Bed sheets, blankets, quilts, and pillow covers.",
-    component: HouseholdLinenCleaningDetails,
-  },
-  home_laundry_services: {
-    label: "Home Laundry Services",
-    description: "Convenient pickup and delivery for residential customers.",
-    component: HomeLaundryServicesDetails,
-  },
-  hotel_laundry_services: {
-    label: "Hotel Laundry Services",
-    description: "Bulk laundry service for hotels and guest houses.",
-    component: HotelLaundryServicesDetails,
-  },
-};
+import { useEffect, useState, type FC } from "react";
+import { useNavigate, useParams } from "react-router-dom";
+import { services, type IService } from "../utils/services";
+import { CheckCircle, Sparkles } from "lucide-react";
+import BookingForm from "./BookingForm";
 
 const ServiceDetails: FC = () => {
   const { name } = useParams();
+  const [isBookingOpen, setIsBookingOpen] = useState(false);
   const navigate = useNavigate();
-  const [selected, setSelected] = useState(name || "");
 
   useEffect(() => {
     window.scrollTo(0, 0);
-    if (name) setSelected(name);
   }, [name]);
 
-  if (!selected || !servicePages[selected]) {
-    return (
-      <div className="p-6">
-        <h2 className="text-center text-gray-600 mb-6 text-xl font-semibold">
-          Our Services
-        </h2>
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-          {Object.entries(servicePages).map(([key, { label, description }]) => (
+  const service: IService | undefined = services.find((s) => s.name === name);
+  if (!service) {
+    return <div className="p-6">No Service Avaliable</div>;
+  }
+  const { title, description, shortDescription, longDscription, types, image } =
+    service;
+  return (
+    <div className="mb-2 bg-white">
+      {/* Hero Section */}
+      <section
+        className="relative w-full h-64 flex items-center justify-center"
+        style={{
+          backgroundImage: `linear-gradient(to bottom right, rgba(0,0,0,0.4), rgba(0,0,0,0.5)), url(${image})`,
+          backgroundSize: "cover",
+          backgroundPosition: "center",
+        }}
+      ></section>
+
+      {/* Main Content */}
+      <section className="max-w-5xl mx-auto p-4">
+        <div className="text-center text-white">
+          <h1 className="text-4xl font-bold">{title}</h1>
+          <p className="mt-2 text-lg max-w-xl mx-auto">{description} </p>
+        </div>
+        {/* Intro */}
+        <div className="mb-8 text-center">
+          <p className="text-gray-700 leading-relaxed max-w-3xl mx-auto text-lg">
+            {longDscription}
+          </p>
+        </div>
+
+        {/* Features List */}
+        <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
+          {types.map((service) => (
             <div
-              key={key}
-              className="bg-white rounded-xl shadow-md overflow-hidden cursor-pointer transition-transform hover:scale-105 aspect-square flex flex-col"
-              onClick={() => navigate(`/our-services/${key}`)}
+              key={service}
+              className="flex items-center gap-3 bg-gray-50 border rounded-lg p-4 shadow-sm hover:shadow-md transition"
             >
-              <img
-                src={bgImage}
-                alt={label}
-                className="w-full h-1/2 object-cover"
-              />
-              <div className="flex flex-col items-center justify-center flex-1 px-4 py-4 bg-gradient-to-r from-blue-600 to-blue-400 text-white">
-                <h3 className="text-lg font-semibold">{label}</h3>
-                <p className="text-sm mt-2 text-center">{description}</p>
-              </div>
+              <CheckCircle className="text-green-500 w-6 h-6 flex-shrink-0" />
+              <span className="text-gray-800 font-medium">{service}</span>
             </div>
           ))}
         </div>
-      </div>
-    );
-  }
 
-  const SelectedComponent = servicePages[selected].component;
+        {/* Extra Highlight Section */}
+        <div className="mt-4 bg-blue-50 border border-blue-200 rounded-lg p-6 flex items-center gap-4">
+          <Sparkles className="text-blue-600 w-8 h-8" />
+          <p className="text-blue-900 font-medium">{shortDescription}</p>
+        </div>
 
-  return (
-    <>
-      <section
-        id="services"
-        className="py-4 bg-gradient-to-b from-sky-50 to-white scroll-mt-2"
-      >
-        <SelectedComponent />
+        {/* Call to Action */}
+        <div className="mt-4 text-center">
+          <button onClick={() => setIsBookingOpen(true)}>
+            Book Your {title} Service Now
+          </button>
+        </div>
       </section>
-    </>
+      <button onClick={() => navigate("/our-services")}>Back</button>
+      {isBookingOpen && (
+        <BookingForm
+          onClose={() => setIsBookingOpen(false)}
+          channel={"all"}
+          defaultService={title}
+        />
+      )}
+    </div>
   );
 };
 
