@@ -1,45 +1,42 @@
-import { Truck, Package, Clock, CheckCircle } from "lucide-react";
-import type { FC } from "react";
+import { Shirt, Home, Sparkles } from "lucide-react";
+import type { FC, JSX } from "react";
 import { useNavigate } from "react-router-dom";
-import { services, type Service } from "../utils/services";
+import bgImage from "../assets/bg-img-home.jpg";
 
 const ServiceCard = ({
   name,
   icon,
   title,
-  color,
-  types,
+  description,
 }: {
   name: string;
-  icon: any;
+  icon: JSX.Element;
   title: string;
-  color: string;
-  types: string[];
+  description: string;
 }) => {
   const navigate = useNavigate();
-  const Icon = icon;
 
   return (
     <div
-      className="cursor-pointer bg-white rounded-xl shadow-lg overflow-hidden"
       onClick={() => navigate(`/our-services/${name}`)}
+      className="cursor-pointer bg-white rounded-xl shadow-lg overflow-hidden hover:shadow-2xl transition-all duration-300 w-full aspect-square flex flex-col"
     >
-      <div
-        className={`flex items-center gap-2 px-2 py-2 ${color} text-white font-semibold text-lg sm:text-xl`}
-      >
-        <Icon className="w-5 h-5" aria-hidden="true" />
-        <span>{title}</span>
+      {/* Top Image */}
+      <div className="w-full h-2/3">
+        <img
+          src={bgImage}
+          alt={title}
+          className="w-full h-full object-cover"
+        />
       </div>
-      <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 px-2 py-2">
-        {types.map((type) => (
-          <div key={type} className="flex items-start gap-2">
-            <CheckCircle
-              className="text-green-500 w-5 h-5 mt-0.5"
-              aria-hidden="true"
-            />
-            <span className="text-gray-800 text-sm sm:text-base">{type}</span>
-          </div>
-        ))}
+
+      {/* Header & Description */}
+      <div className="flex flex-col items-center justify-center flex-1 px-4 py-3">
+        <div className="flex items-center gap-2 text-lg font-semibold text-blue-900 mb-1">
+          {icon}
+          <span>{title}</span>
+        </div>
+        <p className="text-sm text-gray-600 text-center">{description}</p>
       </div>
     </div>
   );
@@ -51,61 +48,43 @@ const OurServices: FC = () => {
       id="services"
       className="py-8 sm:py-20 bg-gradient-to-b from-sky-50 to-white scroll-mt-24"
     >
-      <div className="max-w-6xl mx-auto px-2 sm:px-2">
+      <div className="max-w-6xl mx-auto px-4">
         <h2 className="text-3xl sm:text-4xl font-bold text-center text-blue-900 mb-2">
           Our Services
         </h2>
         <p className="text-center text-base text-gray-600 mb-12">
-          Comprehensive laundry and dry cleaning solutions tailored to your
-          lifestyle.
+          Comprehensive laundry and dry cleaning solutions tailored to your lifestyle.
         </p>
 
         {/* Service Cards */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
-          {services.map(({ name, icon, title, color, types }: Service) => (
-            <ServiceCard
-              key={title}
-              name={name}
-              icon={icon}
-              title={title}
-              color={color}
-              types={types}
-            />
-          ))}
-        </div>
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+          <ServiceCard
+            name="clothing_services"
+            icon={<Shirt className="w-5 h-5" aria-hidden="true" />}
+            title="Clothing Services"
+            description="Wash, fold, iron, and more for your garments."
+          />
 
-        {/* Other Services */}
-        <div className="max-w-3xl mx-auto">
-          <div className="bg-white rounded-xl shadow-lg overflow-hidden">
-            <div className="flex items-center gap-2 px-2 py-2 bg-green-500 text-white font-semibold text-lg sm:text-xl">
-              <Package className="w-5 h-5" aria-hidden="true" />
-              <span>Other Services</span>
-            </div>
-            <div className="flex flex-wrap gap-3 p-2">
-              {[
-                {
-                  label: "Pickup & Delivery",
-                  icon: <Truck className="w-4 h-4" aria-hidden="true" />,
-                },
-                {
-                  label: "Weekly Laundry Subscription",
-                  icon: <Package className="w-4 h-4" aria-hidden="true" />,
-                },
-                {
-                  label: "Same-Day Service",
-                  icon: <Clock className="w-4 h-4" aria-hidden="true" />,
-                },
-              ].map((item, idx) => (
-                <div
-                  key={idx}
-                  className="flex items-center gap-2 bg-green-100 text-green-800 px-2 py-2 rounded-full text-sm font-medium shadow-sm"
-                >
-                  {item.icon}
-                  <span>{item.label}</span>
-                </div>
-              ))}
-            </div>
-          </div>
+          <ServiceCard
+            name="dry_cleaning_services"
+            icon={<Shirt className="w-5 h-5" aria-hidden="true" />}
+            title="Dry Cleaning"
+            description="Expert care for delicate and luxury fabrics."
+          />
+
+          <ServiceCard
+            name="home_and_heavy_items"
+            icon={<Home className="w-5 h-5" aria-hidden="true" />}
+            title="Home & Heavy Items"
+            description="Bedding, curtains, and other bulky items."
+          />
+
+          <ServiceCard
+            name="specialty_services"
+            icon={<Sparkles className="w-5 h-5" aria-hidden="true" />}
+            title="Specialty Services"
+            description="Wedding dresses, uniforms, leather & more."
+          />
         </div>
       </div>
     </section>
