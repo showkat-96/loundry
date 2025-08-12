@@ -6,13 +6,16 @@ export const sendToWhatsapp = ({ message }: { message: string }) => {
   window.open(url, "_blank");
 };
 
-export const sendEmail = async (templateParams: Record<string, unknown>) => {
+export const sendEmail = async ({ message }: { message: string }) => {
   try {
     await emailjs.send(
-      "service_52yx51q",
-      "template_okr4f4c",
-      templateParams,
-      "iKthM-8So1B4aFF-m"
+      "service_co5ifwj",
+      "template_m7xd09c",
+      {
+        email: "professionalserviceslaundry@gmail.com",
+        message,
+      },
+      "bD8ZeXbCK2DRL9ldr"
     );
   } catch (error: any) {
     console.error("FAILED...", error);

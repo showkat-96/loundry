@@ -49,12 +49,21 @@ export default function BookingForm({
     const { name, value } = e.target;
     setFormData({
       ...formData,
-      [name]: value,
+      [name]: value?.trim(),
     });
     setErrors({
       ...errors,
       [name]: value?.trim() ? false : true,
     });
+    if (name == "phone") {
+      const phoneRegex = /^\d{10}$/;
+      if (!phoneRegex.test(value)) {
+        setErrors({
+          ...errors,
+          [name]: true,
+        });
+      }
+    }
   };
 
   const handleSelectService = (value: string) => {
@@ -87,7 +96,11 @@ export default function BookingForm({
     const newErrors: Record<keyof typeof formData, boolean> = {} as any;
     (Object.keys(formData) as (keyof typeof formData)[]).forEach((key) => {
       const value = formData[key];
-      const fieldValid = value !== null && value !== undefined && value !== "";
+      let fieldValid = value !== null && value !== undefined && value !== "";
+      if (key === "phone" && fieldValid) {
+        const phoneRegex = /^\d{10}$/;
+        fieldValid = phoneRegex.test(String(value).trim());
+      }
       newErrors[key] = !fieldValid;
       if (!fieldValid) {
         isValid = false;
@@ -112,8 +125,6 @@ Pickup Date & time: ${date} at ${time}
       setSending(true);
       if (medium === "Email") {
         await sendEmail({
-          to_name: "",
-          from_name: "shyxum96@gmail.com",
           message,
         });
       } else {
@@ -122,7 +133,7 @@ Pickup Date & time: ${date} at ${time}
       setSent("success");
       setTimeout(() => {
         onClose();
-      }, 3000);
+      }, 2000);
     } catch (error) {
       console.error(error);
       setSent("failed");

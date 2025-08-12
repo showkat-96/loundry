@@ -31,12 +31,21 @@ export default function SchedulePickupForm({
     const { name, value } = e.target;
     setPickupData({
       ...pickupData,
-      [name]: value,
+      [name]: value?.trim(),
     });
     setErrors({
       ...errors,
       [name]: value?.trim() ? false : true,
     });
+    if (name == "phone") {
+      const phoneReges = /^\d{10}$/;
+      if (!phoneReges.test(value)) {
+        setErrors({
+          ...errors,
+          [name]: true,
+        });
+      }
+    }
   };
 
   const handleSelectTiming = (value: string) => {
@@ -52,13 +61,17 @@ export default function SchedulePickupForm({
       e.preventDefault();
 
       let isValid = true;
-      const newErrors: Record<keyof typeof pickupData, boolean> = {} as any;
 
+      const newErrors: Record<keyof typeof pickupData, boolean> = {} as any;
       (Object.keys(pickupData) as (keyof typeof pickupData)[]).forEach(
         (key) => {
           const value = pickupData[key];
-          const fieldValid =
+          let fieldValid =
             value !== null && value !== undefined && value !== "";
+          if (key === "phone" && fieldValid) {
+            const phoneRegex = /^\d{10}$/;
+            fieldValid = phoneRegex.test(String(value).trim());
+          }
           newErrors[key] = !fieldValid;
           if (!fieldValid) {
             isValid = false;
@@ -70,11 +83,15 @@ export default function SchedulePickupForm({
 
       setSending(true);
       const { name, phone, address, date, time } = pickupData;
-      const message = `Hi, I'm ${name}, with phone ${phone} from ${address}. I would like to schedule a pickup on ${date} at ${time}.`;
+      const message = `
+*New Pickup Request*
+Name: ${name}
+Phone: ${phone}
+Address: ${address}
+Pickup Date & time: ${date} at ${time}
+     `;
       if (channel === "Email") {
         await sendEmail({
-          to_name: "",
-          from_name: "shyxum96@gmail.com",
           message,
         });
       } else {
