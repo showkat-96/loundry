@@ -35,13 +35,18 @@ function Header() {
                 href="tel:+919596100461"
                 className="flex items-center gap-1 hover:underline"
               >
-                <Phone className="h-4 w-4" />
-                <span className="text-white">
-                  +91-9596100461, +91-8899918922
-                </span>
+                <Phone className="text-white h-4 w-4" />
+                <span className="text-white">+91-9596100461</span>
+              </a>
+              <a
+                href="tel:+918899918922"
+                className="flex items-center gap-1 hover:underline"
+              >
+                <Phone className="text-white h-4 w-4" />
+                <span className="text-white">+91-8899918922</span>
               </a>
               <div className="flex items-center gap-1">
-                <Clock className="h-4 w-4" />
+                <Clock className="text-white h-4 w-4" />
                 <span className="text-white">Mon–Sun: 7AM–10PM</span>
               </div>
             </div>

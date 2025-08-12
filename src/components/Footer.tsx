@@ -57,9 +57,19 @@ function Footer() {
             </div>
             <ul className="space-y-4 text-sm">
               <li className="flex justify-center sm:justify-end items-center gap-2">
-                <Phone className="h-5 w-5" />
-                <a href="tel:+919596100461" className="hover:text-blue-400">
-                  +91-9596100461, +91-8899918922
+                <a
+                  href="tel:+919596100461"
+                  className="flex items-center gap-1 hover:underline"
+                >
+                  <Phone className="text-white h-4 w-4" />
+                  <span className="text-white">+91-9596100461</span>
+                </a>
+                <a
+                  href="tel:+918899918922"
+                  className="flex items-center gap-1 hover:underline"
+                >
+                  <Phone className="text-white h-4 w-4" />
+                  <span className="text-white">+91-8899918922</span>
                 </a>
               </li>
               <li className="flex justify-center sm:justify-end items-center gap-2">
