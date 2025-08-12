@@ -36,7 +36,9 @@ function Header() {
                 className="flex items-center gap-1 hover:underline"
               >
                 <Phone className="h-4 w-4" />
-                <span className="text-white">+91-9596100461, +91-8899918922</span>
+                <span className="text-white">
+                  +91-9596100461, +91-8899918922
+                </span>
               </a>
               <div className="flex items-center gap-1">
                 <Clock className="h-4 w-4" />
@@ -46,10 +48,13 @@ function Header() {
 
             {/* Right: Pickup Info */}
             <div className="flex flex-wrap items-center gap-2 mt-2 md:mt-0">
-               <Truck className="h-5 w-5 text-blue-300 flex-shrink-0" />
-              <span className="text-white font-semibold text-sm sm:text-base whitespace-nowrap"> Free pickup & delivery in <span className="underline">Pulwama</span>
+              <Truck className="h-5 w-5 text-blue-300 flex-shrink-0" />
+              <span className="text-white font-semibold text-sm sm:text-base whitespace-nowrap">
+                {" "}
+                Free pickup & delivery in{" "}
+                <span className="underline">Pulwama</span>
               </span>
-          </div>
+            </div>
           </div>
         </div>
 
