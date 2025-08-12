@@ -199,7 +199,7 @@ export const services: IService[] = [
   {
     name: "home_heavy_item_cleaning",
     icon: Sparkles,
-    title: "Home & Heavy Item Cleaning",
+    title: "Hotel & Home Heavy Item Cleaning",
     color: "bg-gradient-to-r from-purple-500 to-pink-400",
     image: hotelLaundryImg,
     description:
